@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Activities | Kithulgala Water Rafting</title>
+    <meta name="description"
+        content="Experience thrilling water adventures in Kithulgala. White water rafting, canyoning, kayaking and more with professional guides.">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="travelpage" href="travel.html">
+
+    <style>
+        :root {
+            --primary: #0A1A4A;
+            --secondary: #C19A6B;
+            --accent: #E8C39E;
+            --dark: #050A1E;
+            --light: #F8F5F0;
+            --gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            color: #333;
+            background-color: var(--light);
+            padding-top: 80px;
+        }
+
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--primary);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hero Section */
+        .activity-hero {
+            position: relative;
+            height: 60vh;
+            background: linear-gradient(rgba(10, 26, 74, 0.8), rgba(10, 26, 74, 0.8)),
+                url('https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 4rem;
+        }
+
+        .activity-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .activity-hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+      background-color: rgba(10, 36, 99, 0.95) !important;
+      backdrop-filter: blur(10px);
+      padding: 20px 0;
+      height: 70px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .navbar.scrolled {
+      padding: 10px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nav-link {
+      color: white !important;
+      font-weight: 600;
+      margin: 0 12px;
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--gold-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+        .btn-booking {
+            background: linear-gradient(135deg, var(--gold), #B3895B);
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(193, 154, 107, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-booking:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 154, 107, 0.6);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-container {
+            padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Filters */
+        .sidebar {
+            width: 280px;
+            height: calc(100vh - 80px);
+            background: rgba(10, 26, 74, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0 20px 20px 0;
+            padding: 1.5rem;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.3);
+            border-right: 2px solid var(--gold);
+            overflow-y: auto;
+            z-index: 900;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            color: var(--accent);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-header i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(200, 200, 200, 0.1);
+        }
+
+        .filter-section:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .filter-title {
+            color: var(--accent);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-box {
+            margin-top: 0.8rem;
+        }
+
+        .filter-box label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding-left: 5px;
+        }
+
+        .filter-box label:hover {
+            color: var(--accent);
+        }
+
+        .filter-box input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: var(--gold);
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background: var(--gold);
+        }
+
+        .apply-btn {
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 0.8rem;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(193, 154, 107, 0.4);
+        }
+
+        /* Activities Grid */
+        .activities-container {
+            margin-left: 280px;
+            padding: 3rem 2rem;
+            min-height: calc(100vh - 80px);
+            position: relative;
+            z-index: 800;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        .activity-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 400px;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(193, 154, 107, 0.3);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: var(--gold);
+        }
+
+        .activity-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .activity-card:hover .activity-img {
+            transform: scale(1.1);
+        }
+
+        .activity-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(5, 10, 30, 0.9), transparent);
+            padding: 2rem;
+            color: white;
+        }
+
+        .activity-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            text-shadow:
+                -1px -1px 0 black,
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black;
+        }
+
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .activity-price {
+            font-weight: 600;
+            color: var(--gold);
+            font-size: 1.2rem;
+            text-decoration: solid;
+            color: white;
+        }
+
+        .btn-explore {
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            font-size: 1rem;
+        }
+
+        .btn-explore:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(193, 154, 107, 0.4);
+        }
+
+        /* Package Modal - Made smaller */
+        .package-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 10, 30, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .package-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            width: 60%;
+            /* Reduced from 80% */
+            max-width: 600px;
+            /* Reduced from 900px */
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--gold);
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+        }
+
+        .package-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            background: rgba(193, 154, 107, 0.2);
+            padding: 1.2rem;
+            /* Reduced from 1.5rem */
+            border-bottom: 1px solid rgba(193, 154, 107, 0.3);
+            position: relative;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-size: 1.5rem;
+            /* Reduced from 1.8rem */
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.2rem;
+            /* Adjusted */
+            right: 1.2rem;
+            /* Adjusted */
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.3rem;
+            /* Reduced from 1.5rem */
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            display: flex;
+            padding: 0;
+        }
+
+        .modal-image {
+            flex: 1;
+            min-height: 250px;
+            /* Reduced from 400px */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .modal-details {
+            flex: 1;
+            padding: 1.2rem;
+            /* Reduced from 1.5rem */
+            color: white;
+        }
+
+        .package-description {
+            margin-bottom: 0.8rem;
+            /* Reduced from 1rem */
+            line-height: 1.5;
+            font-size: 0.9rem;
+            /* Slightly smaller font */
+        }
+
+        .package-features {
+            margin-bottom: 1.2rem;
+            /* Reduced from 1.5rem */
+        }
+
+        .package-features h5 {
+            font-size: 1.1rem;
+            /* Reduced from 1.2rem */
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            /* Reduced from 0.8rem */
+            font-family: 'Playfair Display', serif;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            /* Reduced from 0.6rem */
+            font-size: 0.85rem;
+            /* Smaller font */
+        }
+
+        .feature-icon {
+            color: var(--gold);
+            margin-right: 6px;
+            /* Reduced from 8px */
+            font-size: 0.9rem;
+            /* Reduced from 1rem */
+        }
+
+        .package-price {
+            font-size: 1.3rem;
+            /* Reduced from 1.5rem */
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            /* Reduced from 1rem */
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn-book {
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            /* Reduced from 0.7rem 1.5rem */
+            font-weight: 600;
+            font-size: 0.9rem;
+            /* Reduced from 1rem */
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .btn-book:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(193, 154, 107, 0.4);
+        }
+
+        /* Chatbot */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(193, 154, 107, 0.5);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        #chatbot-icon:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 25px rgba(193, 154, 107, 0.7);
+        }
+
+        #chatbot-icon img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        #chatbot {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 350px;
+            max-height: 500px;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            transform-origin: bottom right;
+            animation: fadeInUp 0.3s ease-out forwards;
+            border: 1px solid var(--gold);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: rgba(193, 154, 107, 0.2);
+            color: var(--gold);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(193, 154, 107, 0.3);
+        }
+
+        .chat-header-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .chat-header span {
+            font-weight: 600;
+            flex-grow: 1;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-body {
+            padding: 1rem;
+            flex-grow: 1;
+            overflow-y: auto;
+            background: rgba(5, 10, 30, 0.7);
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-message {
+            background: rgba(10, 26, 74, 0.7);
+            border-top-left-radius: 4px;
+            align-self: flex-start;
+            color: white;
+            border: 1px solid rgba(193, 154, 107, 0.2);
+        }
+
+        .user-message {
+            background: var(--gold);
+            color: var(--primary);
+            border-top-right-radius: 4px;
+            align-self: flex-end;
+            font-weight: 500;
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 0.8rem;
+            border-top: 1px solid rgba(193, 154, 107, 0.3);
+            background: rgba(10, 26, 74, 0.8);
+        }
+
+        #user-input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 1px solid rgba(193, 154, 107, 0.3);
+            border-radius: 50px;
+            outline: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: rgba(5, 10, 30, 0.7);
+            color: white;
+        }
+
+        #user-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.2);
+        }
+
+        .chat-footer button {
+            background: var(--gold);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            padding: 0 1.2rem;
+            margin-left: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-footer button:hover {
+            background: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(to bottom, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 0 2rem;
+            position: relative;
+            margin-top: 3rem;
+            border-top: 2px solid var(--gold);
+            z-index: 900;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .footer-logo {
+            width: 80px;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .footer h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+
+        .footer h5::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer ul li a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icons a:hover {
+            background: var(--gold);
+            color: var(--primary);
+            transform: translateY(-3px);
+            border-color: var(--gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(193, 154, 107, 0.2);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+
+            .activities-container {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .activity-hero h1 {
+                font-size: 3rem;
+            }
+
+            .modal-content {
+                flex-direction: column;
+                width: 80%;
+                /* Adjusted */
+            }
+
+            .modal-image {
+                min-height: 200px;
+                /* Adjusted */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                margin-bottom: 2rem;
+                border-radius: 0;
+            }
+
+            .activities-container {
+                margin-left: 0;
+                padding: 2rem 1rem;
+            }
+
+            .activity-hero {
+                height: 50vh;
+            }
+
+            .activity-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .activity-hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .activity-card {
+                height: 350px;
+            }
+
+            .activity-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                width: 90%;
+                /* Adjusted */
+                max-width: none;
+                /* Adjusted */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .activity-hero {
+                height: 40vh;
+            }
+
+            .activity-hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .activity-overlay {
+                padding: 1.5rem;
+            }
+
+            #chatbot {
+                width: 90%;
+                right: 5%;
+            }
+
+            .modal-content {
+                width: 95%;
+                /* Adjusted */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <span class="loader"></span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="activity-hero">
+        <div class="container">
+            <h1>Adventure Activities</h1>
+            <p>Experience the thrill of Kithulgala's white water rafting and other exciting adventures with our
+                professional guides</p>
+        </div>
+    </section>
+ 
+    <!-- Navigation Bar -->
+   <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="images/logo.png" alt="Kithulgala Water Rafting Logo" style="height: 50px;">
+      </a>
+      <span>Kithulgala Water Rafting</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="activity.html">Activities</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              Go Mart
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="shopping mart.html">All Products</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Biscuits</a></li>
+              <li><a class="dropdown-item" href="#">Beverages</a></li>
+              <li><a class="dropdown-item" href="#">Bath Items</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-outline-light rounded-pill px-4" href="booking.html">Book Now</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar Filters -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-filter"></i> Filters
+            </div>
+
+            <!-- Activity Type Filter -->
+            <div class="filter-section">
+                <h5 class="filter-title">
+                    <i class="fas fa-map-marked-alt me-2"></i> Activity Type
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h5>
+                <div class="filter-box">
+                    <label><input type="checkbox" name="activity-type" value="rafting" checked> White Water
+                        Rafting</label>
+                    <label><input type="checkbox" name="activity-type" value="canyoning" checked> Canyoning</label>
+                    <label><input type="checkbox" name="activity-type" value="kayaking" checked> Kayaking</label>
+                    <label><input type="checkbox" name="activity-type" value="trekking" checked> Trekking</label>
+                    <label><input type="checkbox" name="activity-type" value="camping" checked> Camping</label>
+                    <button class="apply-btn" onclick="filterActivities()">Apply</button>
+                </div>
+            </div>
+
+            <!-- Time of Day Filter -->
+            <div class="filter-section">
+                <h5 class="filter-title">
+                    <i class="fas fa-clock me-2"></i> Time of Day
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h5>
+                <div class="filter-box">
+                    <label><input type="checkbox" name="time" value="morning" checked> Morning (6AM - 12PM)</label>
+                    <label><input type="checkbox" name="time" value="afternoon" checked> Afternoon (12PM - 5PM)</label>
+                    <label><input type="checkbox" name="time" value="evening" checked> Evening (5PM - 8PM)</label>
+                    <button class="apply-btn" onclick="filterActivities()">Apply</button>
+                </div>
+            </div>
+
+            <!-- Duration Filter -->
+            <div class="filter-section">
+                <h5 class="filter-title">
+                    <i class="fas fa-hourglass-half me-2"></i> Duration
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h5>
+                <div class="filter-box">
+                    <label><input type="checkbox" name="duration" value="short" checked> Up to 1 hour</label>
+                    <label><input type="checkbox" name="duration" value="medium" checked> 1 to 4 hours</label>
+                    <label><input type="checkbox" name="duration" value="long" checked> 4+ hours</label>
+                    <button class="apply-btn" onclick="filterActivities()">Apply</button>
+                </div>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-section">
+                <h5 class="filter-title">
+                    <i class="fas fa-tag me-2"></i> Price Range
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h5>
+                <div class="filter-box">
+                    <input type="range" class="form-range" id="priceRange" min="0" max="50000" value="50000"
+                        step="1000">
+                    <p>Max Price: <strong>Rs <span id="priceValue">50,000</span></strong></p>
+                    <button class="apply-btn" onclick="filterActivities()">Apply</button>
+                </div>
+            </div>
+
+            <!-- Difficulty Filter -->
+            <div class="filter-section">
+                <h5 class="filter-title">
+                    <i class="fas fa-bolt me-2"></i> Difficulty
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </h5>
+                <div class="filter-box">
+                    <label><input type="checkbox" name="difficulty" value="beginner" checked> Beginner</label>
+                    <label><input type="checkbox" name="difficulty" value="intermediate" checked> Intermediate</label>
+                    <label><input type="checkbox" name="difficulty" value="advanced" checked> Advanced</label>
+                    <button class="apply-btn" onclick="filterActivities()">Apply</button>
+                </div>
+            </div>
+
+            <!-- Reset Filters -->
+            <div class="filter-section">
+                <button class="apply-btn" onclick="resetFilters()">
+                    <i class="fas fa-sync-alt me-2"></i> Reset All Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Activities Grid -->
+        <div class="activities-container">
+            <h2 class="section-title">Our Adventure Packages</h2>
+            <div class="row" id="activitiesGrid">
+                <!-- Activity 1 - White Water Rafting -->
+                <div class="col-lg-6 mb-4" data-activity="rafting" data-time="morning afternoon" data-duration="medium"
+                    data-price="12000" data-difficulty="beginner intermediate">
+                    <div class="activity-card"
+                        onclick="openPackageModal('White Water Rafting', 'Experience the thrill of Class II-III rapids on the Kelani River with our expert guides. Perfect for beginners and experienced rafters alike, this 3-4 hour adventure includes safety briefing, equipment, and refreshments. Navigate through exciting rapids and calm stretches while enjoying the stunning scenery of Kithulgala.', 'images/ex1.jpg', 'Rs 12,000/person', ['3-4 hour duration', 'Professional guides', 'All equipment provided', 'Safety briefing', 'Refreshments included', 'Group discounts available', 'Photos available for purchase'])">
+                        <img src="images/ex1.jpg" alt="White Water Rafting" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">White Water Rafting</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 3-4 hours</span>
+                                <span class="activity-price">Rs 12,000/person</span>
+                            </div>
+                            <p>Experience the thrill of Class II-III rapids on the Kelani River with our expert guides.
+                            </p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2 - Waterfall Abseiling -->
+                <div class="col-lg-6 mb-4" data-activity="canyoning" data-time="morning afternoon" data-duration="long"
+                    data-price="15000" data-difficulty="intermediate advanced">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Waterfall Abseiling', 'Descend stunning waterfalls with our professional guides in this exhilarating canyoning adventure. This full-day experience includes rappelling down waterfalls, natural water slides, and jumps into crystal-clear pools. Perfect for thrill-seekers looking for an unforgettable experience.', 'images/pic06.jpg', 'Rs 15,000/person', ['5-6 hour duration', 'Professional canyoning guides', 'All safety equipment provided', 'Lunch included', 'Photos available for purchase', 'Minimum age: 14 years', 'Swimming skills required'])">
+                        <img src="images/pic06.jpg" alt="Waterfall Abseiling" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Waterfall Abseiling</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 5-6 hours</span>
+                                <span class="activity-price">Rs 15,000/person</span>
+                            </div>
+                            <p>Descend stunning waterfalls with our professional guides in this exhilarating adventure.
+                            </p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 3 - White Water Kayaking -->
+                <div class="col-lg-6 mb-4" data-activity="kayaking" data-time="morning afternoon" data-duration="medium"
+                    data-price="8000" data-difficulty="intermediate advanced">
+                    <div class="activity-card"
+                        onclick="openPackageModal('White Water Kayaking', 'Challenge yourself with our white water kayaking experience in the Kelani River rapids. Our certified instructors will guide you through the basics or help you improve your technique in this 2-3 hour session. Suitable for both beginners and experienced kayakers.', 'images/pic07.png', 'Rs 8,000/person', ['2-3 hour session', 'Certified instructors', 'Beginner and advanced options', 'All equipment provided', 'Safety briefing', 'Small group sizes', 'River ecology information'])">
+                        <img src="images/pic07.png" alt="White Water Kayaking" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">White Water Kayaking</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 2-3 hours</span>
+                                <span class="activity-price">Rs 8,000/person</span>
+                            </div>
+                            <p>Challenge yourself with kayaking in the Kelani River rapids with expert guidance.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 4 - Canyoning -->
+                <div class="col-lg-6 mb-4" data-activity="canyoning" data-time="morning" data-duration="long"
+                    data-price="6500" data-difficulty="intermediate">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Canyoning Adventure', 'Explore the hidden canyons of Kithulgala with this exciting 4-5 hour adventure. Jump into natural pools, slide down smooth rock formations, and rappel down small waterfalls. Our experienced guides will ensure your safety while you enjoy this unique experience.', 'images/pic09.jpg', 'Rs 6,500/person', ['4-5 hour adventure', 'Experienced guides', 'All safety equipment', 'Light refreshments included', 'Swimming required', 'Minimum age: 12 years', 'Water shoes recommended'])">
+                        <img src="images/pic09.jpg" alt="Canyoning Adventure" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Canyoning Adventure</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 4-5 hours</span>
+                                <span class="activity-price">Rs 6,500/person</span>
+                            </div>
+                            <p>Jump, slide and explore hidden canyons with this exciting adventure.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 5 - Marvel Canyoning -->
+                <div class="col-lg-6 mb-4" data-activity="canyoning" data-time="afternoon" data-duration="medium"
+                    data-price="9000" data-difficulty="beginner intermediate">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Marvel Canyoning', 'A slightly easier canyoning experience perfect for beginners or those wanting a less intense adventure. This 3-hour journey takes you through beautiful rock formations and small waterfalls with plenty of opportunities to swim and enjoy the natural beauty.', 'images/pic08.jpg', 'Rs 9,000/person', ['3 hour duration', 'Beginner-friendly', 'All equipment provided', 'Professional guides', 'Small waterfalls and jumps', 'Swimming spots', 'Photos available'])">
+                        <img src="images/pic08.jpg" alt="Marvel Canyoning" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Marvel Canyoning</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 3 hours</span>
+                                <span class="activity-price">Rs 9,000/person</span>
+                            </div>
+                            <p>Beginner-friendly canyoning through beautiful rock formations and small waterfalls.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 6 - Mountain Biking -->
+                <div class="col-lg-6 mb-4" data-activity="trekking" data-time="morning afternoon" data-duration="medium"
+                    data-price="18000" data-difficulty="intermediate advanced">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Mountain Biking', 'Explore the trails around Kithulgala on our high-quality mountain bikes. This 4-hour adventure takes you through tea plantations, jungle paths, and village roads with stunning views. Suitable for riders with some experience.', 'images/pic10.jpg', 'Rs 18,000/person', ['4 hour duration', 'Quality mountain bikes', 'Helmet and safety gear', 'Guide included', 'Water and snacks provided', 'Intermediate to advanced trails', 'Scenic viewpoints'])">
+                        <img src="images/pic10.jpg" alt="Mountain Biking" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Mountain Biking</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 4 hours</span>
+                                <span class="activity-price">Rs 18,000/person</span>
+                            </div>
+                            <p>Explore trails through tea plantations and jungle paths on quality mountain bikes.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 7 - Rainforest Trekking -->
+                <div class="col-lg-6 mb-4" data-activity="trekking" data-time="morning" data-duration="long"
+                    data-price="7500" data-difficulty="beginner intermediate">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Rainforest Trekking', 'Discover the incredible biodiversity of Kithulgala\'s rainforests with our knowledgeable guides. This 5-6 hour trek includes visits to hidden waterfalls, swimming spots, and breathtaking viewpoints. Learn about the local flora and fauna while enjoying the pristine environment.', 'images/pic11.jpg', 'Rs 7,500/person', ['5-6 hour trek', 'Knowledgeable guides', 'Waterfall visits', 'Swimming spots', 'Packed lunch included', 'Binoculars provided', 'Small group sizes'])">
+                        <img src="images/pic11.jpg" alt="Rainforest Trekking" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Rainforest Trekking</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 5-6 hours</span>
+                                <span class="activity-price">Rs 7,500/person</span>
+                            </div>
+                            <p>Discover the biodiversity of Kithulgala's rainforests with knowledgeable guides.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 8 - Day Outing Package -->
+                <div class="col-lg-6 mb-4" data-activity="rafting trekking" data-time="morning afternoon"
+                    data-duration="long" data-price="22000" data-difficulty="beginner intermediate">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Day Outing Package', 'Our comprehensive day package combines rafting and trekking for the ultimate Kithulgala experience. Enjoy a morning of white water rafting followed by an afternoon rainforest trek with a picnic lunch by a waterfall. Perfect for those wanting to experience multiple adventures in one day.', 'images/pic12.jpg', 'Rs 22,000/person', ['Full day experience', 'White water rafting', 'Rainforest trekking', 'Picnic lunch included', 'Professional guides', 'All equipment provided', 'Hotel transfers available'])">
+                        <img src="images/pic12.jpg" alt="Day Outing Package" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Day Outing Package</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> Full day</span>
+                                <span class="activity-price">Rs 22,000/person</span>
+                            </div>
+                            <p>Combination of rafting and trekking for the ultimate Kithulgala experience.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 9 - Night Camping Package -->
+                <div class="col-lg-6 mb-4" data-activity="camping" data-time="evening" data-duration="long"
+                    data-price="15000" data-difficulty="beginner">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Night Camping Package', 'Experience the magic of Kithulgala after dark with our overnight camping package. Set up camp by the river, enjoy a barbecue dinner, and fall asleep to the sounds of the rainforest. Includes morning activities and breakfast.', 'images/pic13.jpg', 'Rs 15,000/person', ['Overnight experience', 'Riverside camping', 'Barbecue dinner', 'Breakfast included', 'Campfire', 'Basic toilet facilities', 'Morning activity option'])">
+                        <img src="images/pic13.jpg" alt="Night Camping Package" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Night Camping Package</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> Overnight</span>
+                                <span class="activity-price">Rs 15,000/person</span>
+                            </div>
+                            <p>Riverside camping with barbecue dinner and morning activities.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 10 - Makandawa Trekking -->
+                <div class="col-lg-6 mb-4" data-activity="trekking" data-time="morning" data-duration="long"
+                    data-price="8500" data-difficulty="intermediate">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Makandawa Trekking', 'Explore the famous Makandawa Rainforest on this guided trek. Discover rare bird species, ancient trees, and hidden waterfalls in one of Sri Lanka\'s most biodiverse areas. This 6-hour trek includes a packed lunch and plenty of photo opportunities.', 'images/pic14.jpg', 'Rs 8,500/person', ['6 hour trek', 'Makandawa Rainforest', 'Birdwatching opportunities', 'Packed lunch included', 'Professional nature guide', 'Waterfall visits', 'Small group size'])">
+                        <img src="images/pic14.jpg" alt="Makandawa Trekking" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Makandawa Trekking</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 6 hours</span>
+                                <span class="activity-price">Rs 8,500/person</span>
+                            </div>
+                            <p>Explore the famous Makandawa Rainforest with professional nature guides.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 11 - Caving -->
+                <div class="col-lg-6 mb-4" data-activity="trekking" data-time="afternoon" data-duration="medium"
+                    data-price="9500" data-difficulty="intermediate advanced">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Caving Adventure', 'Explore hidden cave systems near Kithulgala with our experienced guides. This 3-4 hour adventure includes navigating through underground passages, seeing unique rock formations, and learning about the geological history of the area. Helmets and lights provided.', 'images/pic15.jpg', 'Rs 9,500/person', ['3-4 hour adventure', 'Experienced caving guides', 'Helmets and lights provided', 'Geological interpretation', 'Small group sizes', 'Moderate fitness required', 'Unique rock formations'])">
+                        <img src="images/pic15.jpg" alt="Caving Adventure" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Caving Adventure</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 3-4 hours</span>
+                                <span class="activity-price">Rs 9,500/person</span>
+                            </div>
+                            <p>Explore hidden cave systems with experienced guides and proper equipment.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 12 - Family Rafting -->
+                <div class="col-lg-6 mb-4" data-activity="rafting" data-time="morning afternoon" data-duration="short"
+                    data-price="10000" data-difficulty="beginner">
+                    <div class="activity-card"
+                        onclick="openPackageModal('Family Rafting', 'Specially designed for families with children ages 6+, this gentle rafting experience offers fun and safety for all. Enjoy calmer sections of the river with small rapids perfect for first-timers. Includes all equipment and safety briefing.', 'images/ex1.jpg', 'Rs 10,000/family (up to 4)', ['2 hour duration', 'Family-friendly rapids', 'Special safety for kids', 'Ages 6+', 'Photos included', 'Experienced family guides', 'Calm swimming spots'])">
+                        <img src="images/ex1.jpg" alt="Family Rafting" class="activity-img">
+                        <div class="activity-overlay">
+                            <h3 class="activity-title">Family Rafting</h3>
+                            <div class="activity-meta">
+                                <span><i class="fas fa-clock me-1"></i> 2 hours</span>
+                                <span class="activity-price">Rs 10,000/family</span>
+                            </div>
+                            <p>Gentle rafting perfect for families with children ages 6+.</p>
+                            <button class="btn btn-explore mt-2">Explore Package</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Package Modal -->
+    <div class="package-modal" id="packageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalPackageTitle">Package Title</h3>
+                <button class="close-modal" onclick="closePackageModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" id="modalPackageImage"
+                    style="background-image: url('https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
+                </div>
+                <div class="modal-details">
+                    <p class="package-description" id="modalPackageDescription">Package description will appear here.
+                    </p>
+                    <div class="package-features">
+                        <h5>Package Includes:</h5>
+                        <div id="modalPackageFeatures">
+                            <!-- Features will be added here by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="package-price" id="modalPackagePrice">Rs 0</div>
+                    <button class="btn btn-book" id="modalBookButton">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot-icon" onclick="toggleChat()">
+        <img src="images/asit.png" alt="Chat with us">
+    </div>
+
+    <div id="chatbot">
+        <div class="chat-header">
+            <img src="images/asit.png" alt="Assistant" class="chat-header-icon">
+            <span>Rafting Assistant</span>
+            <button class="close-btn" onclick="toggleChat()">×</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="message bot-message">Hello! I'm your rafting assistant. How can I help you today? 😊</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="user-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <img src="images/logo.png" alt="Logo" class="footer-logo">
+                    <p>Providing thrilling water rafting adventures in Kithulgala since 2005. Safety and fun are our top
+                        priorities.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="activities.html">Activities</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Activities</h5>
+                    <ul>
+                        <li><a href="#">White Water Rafting</a></li>
+                        <li><a href="#">Canyoning</a></li>
+                        <li><a href="#">Kayaking</a></li>
+                        <li><a href="#">Jungle Trekking</a></li>
+                        <li><a href="#">Camping</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Kithulgala, Sri Lanka</li>
+                        <li><i class="fas fa-phone me-2"></i> +94 76 123 4567</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@kithulgarafting.com</li>
+                    </ul>
+                    <div class="subscription-box mt-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-booking mt-2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Kithulgala Water Rafting. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Loader
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(function () {
+                    document.getElementById('loader').style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Toggle filter sections
+        $(document).ready(function () {
+            $('.filter-title').click(function () {
+                $(this).find('.toggle-icon').toggleClass('fa-chevron-down fa-chevron-up');
+                $(this).siblings('.filter-box').slideToggle(300);
+            });
+
+            // Initialize all filter boxes as visible
+            $('.filter-box').show();
+
+            // Price range slider
+            const priceRange = document.getElementById('priceRange');
+            const priceValue = document.getElementById('priceValue');
+
+            priceRange.addEventListener('input', function () {
+                priceValue.textContent = Number(priceRange.value).toLocaleString();
+            });
+        });
+
+        // Package Modal functionality
+        function openPackageModal(title, description, imageUrl, price, features) {
+            // Set modal content
+            document.getElementById('modalPackageTitle').textContent = title;
+            document.getElementById('modalPackageDescription').textContent = description;
+            document.getElementById('modalPackageImage').style.backgroundImage = `url('${imageUrl}')`;
+            document.getElementById('modalPackagePrice').textContent = price;
+
+            // Clear previous features
+            const featuresContainer = document.getElementById('modalPackageFeatures');
+            featuresContainer.innerHTML = '';
+
+            // Add new features
+            features.forEach(feature => {
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item';
+                featureItem.innerHTML = `
+                    <i class="fas fa-check-circle feature-icon"></i>
+                    <span>${feature}</span>
+                `;
+                featuresContainer.appendChild(featureItem);
+            });
+
+            // Set the correct booking link based on the package
+            const bookButton = document.getElementById('modalBookButton');
+            if (title === 'White Water Rafting') {
+                bookButton.onclick = function () { window.location.href = 'travel.html'; };
+            } else if (title === 'Waterfall Abseiling') {
+                bookButton.onclick = function () { window.location.href = 'travel2.html'; };
+            } else if (title === 'White Water Kayaking') {
+                bookButton.onclick = function () { window.location.href = 'travel3.html'; };
+            } else if (title === 'Canyoning Adventure') {
+                bookButton.onclick = function () { window.location.href = 'travel4.html'; };
+            } else if (title === 'Marvel Canyoning') {
+                bookButton.onclick = function () { window.location.href = 'travel5.html'; };
+            } else if (title === 'Mountain Biking') {
+                bookButton.onclick = function () { window.location.href = 'travel6.html'; };
+            } else if (title === 'Rainforest Trekking') {
+                bookButton.onclick = function () { window.location.href = 'travel7.html'; };
+            } else if (title === 'Day Outing Package') {
+                bookButton.onclick = function () { window.location.href = 'travel8.html'; };
+            } else if (title === 'Night Camping Package') {
+                bookButton.onclick = function () { window.location.href = 'travel9.html'; };
+            } else if (title === 'Makandawa Trekking') {
+                bookButton.onclick = function () { window.location.href = 'travel10.html'; };
+            } else if (title === 'Caving Adventure') {
+                bookButton.onclick = function () { window.location.href = 'travel11.html'; };
+            } else if (title === 'Family Rafting') {
+                bookButton.onclick = function () { window.location.href = 'travel12.html'; };
+
+            } else {
+                // Default booking page for other packages
+                bookButton.onclick = function () { window.location.href = 'travel.html'; };
+            }
+
+            // Show modal
+            document.getElementById('packageModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePackageModal() {
+            document.getElementById('packageModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('packageModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closePackageModal();
+            }
+        });
+
+        // Activity filtering functionality
+        function filterActivities() {
+            const maxPrice = parseInt(document.getElementById('priceRange').value);
+            const selectedTypes = getSelectedValues('activity-type');
+            const selectedTimes = getSelectedValues('time');
+            const selectedDurations = getSelectedValues('duration');
+            const selectedDifficulties = getSelectedValues('difficulty');
+
+            const activityCards = document.querySelectorAll('#activitiesGrid > div');
+
+            activityCards.forEach(card => {
+                const cardPrice = parseInt(card.getAttribute('data-price'));
+                const cardType = card.getAttribute('data-activity').split(' ');
+                const cardTime = card.getAttribute('data-time').split(' ');
+                const cardDuration = card.getAttribute('data-duration');
+                const cardDifficulty = card.getAttribute('data-difficulty');
+
+                // Check if card matches all selected filters
+                const matchesPrice = cardPrice <= maxPrice;
+                const matchesType = selectedTypes.length === 0 || cardType.some(type => selectedTypes.includes(type));
+                const matchesTime = selectedTimes.length === 0 || cardTime.some(time => selectedTimes.includes(time));
+                const matchesDuration = selectedDurations.length === 0 || selectedDurations.includes(cardDuration);
+                const matchesDifficulty = selectedDifficulties.length === 0 || selectedDifficulties.includes(cardDifficulty);
+
+                if (matchesPrice && matchesType && matchesTime && matchesDuration && matchesDifficulty) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function getSelectedValues(name) {
+            const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        function resetFilters() {
+            // Uncheck all checkboxes
+            document.querySelectorAll('.filter-box input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Reset price range
+            document.getElementById('priceRange').value = 50000;
+            document.getElementById('priceValue').textContent = '50,000';
+
+            // Show all activities
+            document.querySelectorAll('#activitiesGrid > div').forEach(card => {
+                card.style.display = 'block';
+            });
+        }
+
+        // Chatbot functionality
+        function toggleChat() {
+            const chatbot = document.getElementById('chatbot');
+            if (chatbot.style.display === 'none' || chatbot.style.display === '') {
+                chatbot.style.display = 'flex';
+            } else {
+                chatbot.style.display = 'none';
+            }
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+
+            if (message === '') return;
+
+            const chatBody = document.getElementById('chat-body');
+
+            // Add user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user-message';
+            userMsg.textContent = message;
+            chatBody.appendChild(userMsg);
+
+            userInput.value = '';
+
+            // Bot response
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot-message';
+                botMsg.textContent = getBotResponse(message);
+                chatBody.appendChild(botMsg);
+
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function getBotResponse(input) {
+            input = input.toLowerCase();
+
+            if (input.includes('hello') || input.includes('hi')) {
+                return "Hello there! Ready for an exciting rafting adventure?";
+            } else if (input.includes('price') || input.includes('cost')) {
+                return "Our rafting packages start from Rs 8,000 per person. Would you like details on a specific activity?";
+            } else if (input.includes('book') || input.includes('reservation')) {
+                return "You can book directly on our website or call us at +94 76 123 4567. How many people are in your group?";
+            } else if (input.includes('time') || input.includes('duration')) {
+                return "Most activities last 2-4 hours. Morning sessions start at 8AM, afternoon at 1PM. What time works best for you?";
+            } else if (input.includes('safe') || input.includes('danger')) {
+                return "Safety is our top priority! All activities are guided by certified professionals with top-notch equipment.";
+            } else if (input.includes('family') || input.includes('children')) {
+                return "We have special family-friendly rafting for ages 6+ and other activities suitable for children.";
+            } else if (input.includes('difficulty') || input.includes('hard')) {
+                return "We offer activities for all levels - beginner, intermediate and advanced. Our guides will match the experience to your ability.";
+            } else if (input.includes('what to bring') || input.includes('wear')) {
+                return "For water activities, bring swimwear, a towel and sunscreen. For trekking, wear comfortable shoes. We provide all specialized equipment.";
+            } else {
+                return "I'm happy to help with any questions about rafting, canyoning or other adventures!";
+            }
+        }
+
+        // Initialize chat with greeting
+        window.onload = function () {
+            setTimeout(() => {
+                const chatBody = document.getElementById('chat-body');
+                const greeting = document.createElement('div');
+                greeting.className = 'message bot-message';
+                greeting.textContent = "Hello! I'm your rafting assistant. How can I help you today? 😊";
+                chatBody.appendChild(greeting);
+            }, 1000);
+        };
+    </script>
+</body>
+
+</html>

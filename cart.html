@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Mart - Your Cart</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;700&family=Lilita+One&family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://example.com/images/favicon.ico" type="image/x-icon">
+  <script src="popup.js"></script>
+  <style>
+    :root {
+      --primary: #071349; /* Royal blue */
+      --gold: #d4af37;   /* Gold color */
+      --success: #28a745; /* Success green */
+    }
+
+    /* Additional Royal Styling */
+    .royal-header {
+      font-family: 'Cinzel', serif;
+      color: #d4af37; /* Gold color */
+    }
+    
+    .royal-body {
+      font-family: 'Lora', serif;
+    }
+    
+    .royal-bg {
+      background-color: #071349;
+    }
+    
+    .gold-accent {
+      color: #d4af37;
+    }
+    
+    .royal-card {
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+    
+    .royal-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .royal-btn {
+      background-color: #d4af37;
+      color: #071349;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .royal-btn:hover {
+      background-color: #b6982a;
+      color: #fff;
+    }
+    
+    .cart-summary {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cart-item-img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+    
+    .empty-cart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+    }
+    
+    .empty-cart-icon {
+      font-size: 60px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+    
+    .service-charge {
+      color: #666;
+    }
+    
+    .total-amount {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background-color: rgba(10, 36, 99, 0.9) !important;
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      height: 60px;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 10px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      margin: 0 10px;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--gold);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Booking Steps */
+    .booking-steps {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(193, 154, 107, 0.2);
+    }
+
+    .step-icons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .step-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+      z-index: 1;
+    }
+
+    .step-icon.active .icon-container {
+      background-color: var(--gold);
+      color: var(--primary);
+      box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.2);
+    }
+
+    .step-icon.completed .icon-container {
+      background-color: var(--primary);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+    }
+
+    .icon-container {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(10, 26, 74, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      border: 2px solid transparent;
+    }
+
+    .step-line {
+      flex-grow: 1;
+      height: 2px;
+      background-color: rgba(10, 26, 74, 0.2);
+      margin: 0 1rem;
+      position: relative;
+      top: -15px;
+    }
+
+    .step-line.active,
+    .step-line.completed {
+      background-color: var(--gold);
+    }
+
+    .step-title {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .step-icon.completed .step-title {
+      color: var(--primary);
+    }
+
+    /* Loader */
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #d4af37;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Video Background */
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Package Notification */
+    .package-notification {
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Quantity Controls */
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .quantity-input {
+      width: 40px;
+      text-align: center;
+      margin: 0 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loader-container" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Main Content (hidden initially) -->
+  <div class="main-content" id="main-content" style="display: none;">
+    <!-- Video Background -->
+    <div class="video-container">
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="images/mart.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="home page.html">
+          <img src="images/logo.png" alt="Kithulgala Water Rafting Logo" style="height: 50px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="home page.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="home page.html#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="home page.html#activities">Activities</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                Go Mart
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="shopping mart.html">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="shopping mart.html#Biscuits">Biscuits</a></li>
+                <li><a class="dropdown-item" href="shopping mart.html#Cold Drinks">Beverages</a></li>
+                <li><a class="dropdown-item" href="shopping mart.html#Bath Items">Bath Items</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="home page.html#contact">Contact</a>
+            </li>
+            <li class="nav-item ms-lg-3">
+              <a class="btn btn-outline-light rounded-pill px-4" href="booking.html">Book Now</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Cart Container -->
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-10" style="margin-top: 50px;">
+          <div class="royal-card p-4" style="background-color: rgba(255, 255, 255, 0.9);">
+            <!-- Booking Steps -->
+            <div class="booking-steps">
+              <div class="step-icons">
+                <div class="step-icon completed">
+                  <div class="icon-container">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <span class="step-title">TRAVEL DATE</span>
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step-icon active">
+                  <div class="icon-container">
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                  <span class="step-title">CART</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-icon">
+                  <div class="icon-container">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <span class="step-title">BOOKING INFO</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-icon">
+                  <div class="icon-container">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <span class="step-title">PAYMENT</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Package Notification (if any) -->
+            <div id="package-notification-container"></div>
+
+            <div class="row">
+              <!-- Cart Items Column -->
+              <div class="col-md-8">
+                <div class="royal-card p-3 mb-4">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="royal-header m-0">Your Order Items</h4>
+                    <span class="badge royal-bg" id="item-count">0 items</span>
+                  </div>
+                  
+                  <div id="cart-items-container" class="mb-3">
+                    <!-- Cart items will be dynamically inserted here -->
+                    <div class="empty-cart">
+                      <i class="ri-shopping-cart-line empty-cart-icon"></i>
+                      <p class="text-muted">Your cart is empty</p>
+                    </div>
+                  </div>
+                  
+                  <a href="shopping mart.html" class="royal-btn w-100 py-2 d-block text-center text-decoration-none">
+                    <i class="ri-add-line"></i> ADD MORE ITEMS
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Cart Summary Column -->
+              <div class="col-md-4">
+                <div class="cart-summary royal-card p-4">
+                  <h4 class="royal-header mb-4">Order Summary</h4>
+                  
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span class="subtotal-price fw-bold">Rs 0.00</span>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between mb-2">
+                    <span class="service-charge">Service Charge:</span>
+                    <span class="service-charge-amount">Rs 200.00</span>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="d-flex justify-content-between mb-4">
+                    <span class="fw-bold total-amount">Total:</span>
+                    <span class="total-price-cart fw-bold gold-accent">Rs 0.00</span>
+                  </div>
+                  
+                  <a href="booking_info.html" class="royal-btn w-100 py-2 mb-3 d-block text-center text-decoration-none" id="proceed-btn">
+                    PROCEED TO CHECKOUT <i class="ri-arrow-right-line"></i>
+                  </a>
+                  
+                  <div class="text-center">
+                    <small class="text-muted">or</small>
+                    <a href="shopping mart.html" class="d-block mt-2">Continue Shopping</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <img src="images/logo.png" alt="Kithulgala Water Rafting" class="footer-logo">
+            <p class="mt-3">Providing unforgettable white water rafting experiences in Sri Lanka since 2010. Safety,
+              adventure, and professionalism at its best.</p>
+            <div class="social-icons mt-4">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-tripadvisor"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4">
+            <h5 class="mb-4">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="home page.html" class="text-white text-decoration-none">Home</a></li>
+              <li class="mb-2"><a href="home page.html#about" class="text-white text-decoration-none">About Us</a></li>
+              <li class="mb-2"><a href="home page.html#activities" class="text-white text-decoration-none">Activities</a>
+              </li>
+              <li class="mb-2"><a href="shopping mart.html" class="text-white text-decoration-none">Go Mart</a></li>
+              <li class="mb-2"><a href="home page.html#contact" class="text-white text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <h5 class="mb-4">Contact Info</h5>
+            <ul class="list-unstyled">
+              <li class="mb-3"><i class="fas fa-map-marker-alt me-2"></i> Kithulgala, Sri Lanka</li>
+              <li class="mb-3"><i class="fas fa-phone me-2"></i> +94 77 123 4567</li>
+              <li class="mb-3"><i class="fas fa-envelope me-2"></i> info@kithulgalarafting.com</li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <h5 class="mb-4">Newsletter</h5>
+            <p>Subscribe to get special offers and updates</p>
+            <form class="mt-3">
+              <div class="input-group mb-3 " style="width: 300px;">
+                <input type="email" class="form-control" placeholder="Your Email">
+                <button class="btn btn-outline-light" type="submit">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <hr class="mt-5 mb-4" style="border-color: rgba(255,255,255,0.1);">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">&copy; 2024 Kithulgala Water Rafting. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <p class="mb-0">Designed with <i class="fas fa-heart text-danger"></i> in Sri Lanka</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check for package in localStorage
+      const package = JSON.parse(localStorage.getItem('currentPackage'));
+      const packageContainer = document.getElementById('package-notification-container');
+      
+      if (package) {
+  const packageNotification = document.createElement('div');
+  packageNotification.className = 'package-notification';
+  
+  // Format price based on current currency
+  const currentCurrency = localStorage.getItem('currency') || 'Rs';
+  let displayPrice = package.price;
+  
+  // If package price is in dollars but user selected Rs, convert it
+  if (package.price.includes('$') && currentCurrency === 'Rs') {
+    const priceValue = parseFloat(package.price.replace(/[^\d.]/g, ''));
+    displayPrice = `Rs ${(priceValue * conversionRate).toFixed(2)}`;
+  }
+  // If package price is in Rs but user selected $, convert it
+  else if (package.price.includes('Rs') && currentCurrency === '$') {
+    const priceValue = parseFloat(package.price.replace(/[^\d.]/g, ''));
+    displayPrice = `$${(priceValue / conversionRate).toFixed(2)}`;
+  }
+  
+  packageNotification.innerHTML = `
+    <div class="d-flex align-items-center justify-content-between p-3" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; margin-bottom: 20px;">
+      <div class="d-flex align-items-center">
+        <img src="${package.image}" alt="${package.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px; margin-right: 15px;">
+        <div>
+          <h6 style="margin-bottom: 5px; color: var(--primary);">${package.name}</h6>
+          <small class="text-muted">${package.description}</small>
+        </div>
+      </div>
+      <div class="text-end">
+        <small class="d-block">${displayPrice}</small>
+        <a href="cart.html" class="btn btn-sm" style="background-color: var(--gold); color: var(--primary); padding: 2px 10px; font-size: 12px; margin-top: 5px;">View</a>
+      </div>
+    </div>
+  `;
+  
+  packageContainer.appendChild(packageNotification);
+}
+
+      // Load cart items from localStorage
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const cartItemsContainer = document.getElementById('cart-items-container');
+      const subtotalPriceContainer = document.querySelector('.subtotal-price');
+      const serviceChargeContainer = document.querySelector('.service-charge-amount');
+      const totalPriceContainer = document.querySelector('.total-price-cart');
+      const itemCountElement = document.getElementById('item-count');
+      const proceedBtn = document.getElementById('proceed-btn');
+      const conversionRate = 300; // 1 USD = 300 LKR
+      const baseServiceCharge = 200; // Rs 200 service charge
+      
+      // Function to calculate subtotal
+    // Function to calculate subtotal
+// Function to calculate subtotal
+const calculateSubtotal = () => {
+  // Calculate subtotal from cart items
+  const itemsSubtotal = cartItems.reduce((total, item) => {
+    const priceStr = item.price.toString();
+    const priceValue = parseFloat(priceStr.replace(/[^\d.]/g, ''));
+    const isDollar = priceStr.includes('$');
+    const priceInRs = isDollar ? priceValue * conversionRate : priceValue;
+    return total + (priceInRs * parseInt(item.quantity, 10));
+  }, 0);
+
+  // Add package price if available
+  const package = JSON.parse(localStorage.getItem('currentPackage'));
+  if (package) {
+    const packagePriceStr = package.price.toString();
+    const packagePriceValue = parseFloat(packagePriceStr.replace(/[^\d.]/g, ''));
+    const isPackageDollar = packagePriceStr.includes('$');
+    const packagePriceInRs = isPackageDollar ? packagePriceValue * conversionRate : packagePriceValue;
+    return itemsSubtotal + packagePriceInRs;
+  }
+
+  return itemsSubtotal;
+};
+
+      // Function to update all prices based on currency
+  // Function to update all prices based on currency
+const updateAllPrices = (currency) => {
+  const subtotal = calculateSubtotal();
+  let serviceCharge, total;
+  
+  if (currency === '$') {
+    // Convert to dollars
+    subtotalPriceContainer.textContent = `$${(subtotal / conversionRate).toFixed(2)}`;
+    serviceCharge = baseServiceCharge / conversionRate;
+    serviceChargeContainer.textContent = `$${serviceCharge.toFixed(2)}`;
+    total = (subtotal + baseServiceCharge) / conversionRate;
+    totalPriceContainer.textContent = `$${total.toFixed(2)}`;
+  } else {
+    // Keep in rupees
+    subtotalPriceContainer.textContent = `Rs ${subtotal.toFixed(2)}`;
+    serviceChargeContainer.textContent = `Rs ${baseServiceCharge.toFixed(2)}`;
+    total = subtotal + baseServiceCharge;
+    totalPriceContainer.textContent = `Rs ${total.toFixed(2)}`;
+  }
+};
+
+      // Function to render cart items
+      const renderCartItems = () => {
+        cartItemsContainer.innerHTML = ''; // Clear the container
+        
+        if (cartItems.length === 0) {
+          cartItemsContainer.innerHTML = `
+            <div class="empty-cart">
+              <i class="ri-shopping-cart-line empty-cart-icon"></i>
+              <p class="text-muted">Your cart is empty</p>
+            </div>
+          `;
+          subtotalPriceContainer.textContent = 'Rs 0.00';
+          serviceChargeContainer.textContent = 'Rs 0.00';
+          totalPriceContainer.textContent = 'Rs 0.00';
+          itemCountElement.textContent = '0 items';
+          proceedBtn.style.display = 'none';
+          return;
+        }
+
+        // Update item count
+        const totalItems = cartItems.reduce((sum, item) => sum + parseInt(item.quantity), 0);
+        itemCountElement.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+        proceedBtn.style.display = 'block';
+
+        // Add each cart item to the container
+        cartItems.forEach((item, index) => {
+          const cartItem = document.createElement('div');
+          cartItem.classList.add('d-flex', 'align-items-center', 'mb-3', 'p-2', 'bg-light', 'rounded');
+          
+          cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.title}" class="cart-item-img me-3">
+            <div class="flex-grow-1">
+              <h6 class="mb-1">${item.title}</h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="quantity-controls">
+                  <button class="quantity-btn decrease-btn" data-index="${index}">-</button>
+                  <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-index="${index}">
+                  <button class="quantity-btn increase-btn" data-index="${index}">+</button>
+                </div>
+                <span class="text-muted">${item.price}</span>
+                <button class="btn btn-sm btn-outline-danger delete-btn" data-index="${index}">
+                  <i class="ri-delete-bin-line"></i>
+                </button>
+              </div>
+            </div>
+          `;
+          cartItemsContainer.appendChild(cartItem);
+        });
+
+        // Update all prices based on current currency
+        const savedCurrency = localStorage.getItem('currency') || 'Rs';
+        updateAllPrices(savedCurrency);
+      };
+
+      // Initial render
+      renderCartItems();
+
+      // Event delegation for quantity controls and delete buttons
+      cartItemsContainer.addEventListener('click', (event) => {
+        // Handle delete button
+        if (event.target.closest('.delete-btn')) {
+          const index = event.target.closest('.delete-btn').dataset.index;
+          cartItems.splice(index, 1);
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          renderCartItems();
+          
+          // Update cart count in localStorage
+          const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+          localStorage.setItem('cartCount', cartCount);
+          
+          // Dispatch event to update cart count in other pages
+          const cartUpdateEvent = new Event('cartUpdated');
+          window.dispatchEvent(cartUpdateEvent);
+        }
+        
+        // Handle decrease quantity button
+        if (event.target.closest('.decrease-btn')) {
+          const index = event.target.closest('.decrease-btn').dataset.index;
+          if (cartItems[index].quantity > 1) {
+            cartItems[index].quantity--;
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            renderCartItems();
+            
+            // Update cart count in localStorage
+            const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+            localStorage.setItem('cartCount', cartCount);
+            
+            // Dispatch event to update cart count in other pages
+            const cartUpdateEvent = new Event('cartUpdated');
+            window.dispatchEvent(cartUpdateEvent);
+          }
+        }
+        
+        // Handle increase quantity button
+        if (event.target.closest('.increase-btn')) {
+          const index = event.target.closest('.increase-btn').dataset.index;
+          cartItems[index].quantity++;
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          renderCartItems();
+          
+          // Update cart count in localStorage
+          const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+          localStorage.setItem('cartCount', cartCount);
+          
+          // Dispatch event to update cart count in other pages
+          const cartUpdateEvent = new Event('cartUpdated');
+          window.dispatchEvent(cartUpdateEvent);
+        }
+      });
+      
+      // Handle direct quantity input changes
+      cartItemsContainer.addEventListener('change', (event) => {
+        if (event.target.classList.contains('quantity-input')) {
+          const index = event.target.dataset.index;
+          const newQuantity = parseInt(event.target.value);
+          
+          if (newQuantity > 0) {
+            cartItems[index].quantity = newQuantity;
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            renderCartItems();
+            
+            // Update cart count in localStorage
+            const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+            localStorage.setItem('cartCount', cartCount);
+            
+            // Dispatch event to update cart count in other pages
+            const cartUpdateEvent = new Event('cartUpdated');
+            window.dispatchEvent(cartUpdateEvent);
+          } else {
+            // Reset to 1 if invalid value entered
+            event.target.value = 1;
+          }
+        }
+      });
+      
+      // Listen for currency changes (from popup.js)
+      window.addEventListener('currencyChange', () => {
+        const savedCurrency = localStorage.getItem('currency') || 'Rs';
+        updateAllPrices(savedCurrency);
+        
+        // Re-render cart items to update prices
+        renderCartItems();
+      });
+    });
+
+    // Hide the loader and show the main content after 2 seconds
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      const mainContent = document.getElementById('main-content');
+  
+      if (loader && mainContent) {
+        loader.style.display = 'none';
+        mainContent.style.display = 'block';
+      }
+    }, 2000);
+  </script>
+</body>
+</html>

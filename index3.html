@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <!-- Logo -->
+            <div class="logo-container">
+                <img src="logo.jpg" alt="Logo">
+                <span class="site-title">Kithulgala Water Rafting</span>
+            
+            </div>
+    
+            <!-- Navigation Menu -->
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Actively Plans</a></li>
+                    <li><a href="#">City Mart Shopping</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+    
+            <!-- Booking Button -->
+            <div class="booking-btn">
+                <a href="#">Booking Now</a>
+            </div>
+        </div>
+    </header>
+    <!-- Progress Bar Container -->
+    <div class="progress-container">
+        <div class="progress-step">
+            <img src="date-icon.jpg" alt="Travel Date">
+            <p>TRAVEL DATE</p>
+        </div>
+        <div class="progress-line"></div> <!-- Blue Line -->
+        <div class="progress-step">
+            <img src="cart1.png" alt="Cart">
+            <p>CART</p>
+        </div>
+        <div class="progress-line"></div> <!-- Blue Line -->
+        <div class="progress-step">
+            <img src="pencil1.webp" alt="Booking Info">
+            <p>BOOKING INFO</p>
+        </div>
+        <div class="progress-line"></div> <!-- Blue Line -->
+        <div class="progress-step">
+            <img src="payment1.webp" alt="Payment">
+            <p>PAYMENT</p>
+        </div>
+    </div>
+    
+
+    
+    <!-- Booking Information -->
+<div class="booking-container">
+    <h2>Booking Information</h2>
+    <div class="booking-details">
+        <div class="activity-container">
+            <p>WHITE WATER RAFTING WITH LUNCH</p>
+            <button class="edit-btn">✏️</button>
+        </div>
+        <table>
+            <tr>
+                <th>GUEST</th>
+                <th>SUB TOTAL</th>
+                <th>DATE</th>
+            </tr>
+            <tr>
+                <td>USD <span id="price">78.5</span></td>
+                <td>Bank Charges (3.75%): <span id="bank-charges">2.85</span></td>
+                <td></td>
+            </tr>
+        </table>
+        <p class="total">Total: <span id="total">$78.85</span></p>
+    </div>
+</div>
+
+     <!-- Payment Information -->
+<div class="payment-container">
+    <h2>Payment Information</h2>
+    <div class="payment-info">
+        <p>Pay now with Credit Card</p>
+        <p>Card Holder must travel and should provide the card used for this transaction on arrival at the activity center for verification purposes and in order to honor the booking. This is a mandatory requirement, failure to do so we have the right to not to honor the booking.</p>
+        
+        <label>
+            <input type="checkbox" required>
+            I have read and accept the <a href="#">Cancellation Policy</a>
+        </label>
+
+        <p class="guarantee-text">You are getting the lowest possible price at the time of booking - guaranteed!</p>
+        <button class="pay-button" onclick="goToPayment()">Pay</button>
+    </div>
+</div>
+<script>
+    function goToPayment() {
+      window.location.href = "payment.html";
+    }
+  </script>
+  <!-- Billing Information Section -->
+<div class="billing-container">
+    <h3>Billing Information <button class="edit-btn">✏️</button></h3>
+    <div class="billing-details">
+        <p><strong>First Name:</strong> Bhanu</p>
+        <p><strong>Last Name:</strong> Liyanaarachchi</p>
+        <p><strong>Email:</strong> bhanu@gmail.com</p>
+        <p><strong>Verify Email:</strong> bhanu@gmail.com</p>
+        <p><strong>Country:</strong> Sri Lanka</p>
+        <p><strong>Mobile Number - In your country:</strong> 0773324021</p>
+        <p><strong>Phone Number(s) - In Sri Lanka:</strong> 0773324021</p>
+        <p><strong>Hotel you stay:</strong> Ocean Grand Hotel, Kitulgala</p>
+        <p><strong>How do you come to the activity location?</strong> By a car</p>
+        <p><strong>Chauffeur's mobile no:</strong> 0775663344</p>
+    </div>
+</div>
+
+    
+    
+</body>
+</html>

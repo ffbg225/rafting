@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Mart - Booking Information</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;700&family=Lilita+One&family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://example.com/images/favicon.ico" type="image/x-icon">
+  <script src="popup.js"></script>
+  <style>
+    :root {
+      --primary: #071349; /* Royal blue */
+      --gold: #d4af37;   /* Gold color */
+      --success: #28a745; /* Success green */
+    }
+
+    /* Additional Royal Styling */
+    .royal-header {
+      font-family: 'Cinzel', serif;
+      color: #d4af37; /* Gold color */
+    }
+    
+    .royal-body {
+      font-family: 'Lora', serif;
+    }
+    
+    .royal-bg {
+      background-color: #071349;
+    }
+    
+    .gold-accent {
+      color: #d4af37;
+    }
+    
+    .royal-card {
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+    
+    .royal-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .royal-btn {
+      background-color: #d4af37;
+      color: #071349;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .royal-btn:hover {
+      background-color: #b6982a;
+      color: #fff;
+    }
+    
+    .booking-form-container {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 5px 5px;
+      max-width: 800px; /* limit width */
+      margin-right: 200px;
+      width: 300px;
+    }
+  
+
+    
+    .form-control:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+    }
+    
+    .form-label {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    /* Navigation */
+    .navbar {
+      background-color: rgba(10, 36, 99, 0.9) !important;
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      height: 60px;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 10px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      margin: 0 10px;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--gold);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Booking Steps */
+    .booking-steps {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(193, 154, 107, 0.2);
+    }
+
+    .step-icons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .step-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+      z-index: 1;
+    }
+
+    .step-icon.active .icon-container {
+      background-color: var(--gold);
+      color: var(--primary);
+      box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.2);
+    }
+
+    .step-icon.completed .icon-container {
+      background-color: var(--primary);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+    }
+
+    .icon-container {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(10, 26, 74, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      border: 2px solid transparent;
+    }
+
+    .step-line {
+      flex-grow: 1;
+      height: 2px;
+      background-color: rgba(10, 26, 74, 0.2);
+      margin: 0 1rem;
+      position: relative;
+      top: -15px;
+    }
+
+    .step-line.active,
+    .step-line.completed {
+      background-color: var(--gold);
+    }
+
+    .step-title {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .step-icon.completed .step-title {
+      color: var(--primary);
+    }
+
+    /* Loader */
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #d4af37;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Video Background */
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Form Section */
+    .form-section {
+  background-color: #ffffff; /* white background */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* limit width */
+  margin: 0 auto; /* center align */
+}
+
+
+    /* Cart Summary */
+    .cart-summary {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      height: 100%;
+    }
+
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .summary-title {
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loader-container" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Main Content (hidden initially) -->
+  <div class="main-content" id="main-content" style="display: none;">
+    <!-- Video Background -->
+    <div class="video-container">
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="images/mart.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo.png" alt="Kithulgala Water Rafting Logo" style="height: 50px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#activities">Activities</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                Go Mart
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="shopping mart.html">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Biscuits</a></li>
+                <li><a class="dropdown-item" href="#">Beverages</a></li>
+                <li><a class="dropdown-item" href="#">Bath Items</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item ms-lg-3">
+              <a class="btn btn-outline-light rounded-pill px-4" href="booking.html">Book Now</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Booking Container -->
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-10" style="margin-top: 50px;">
+          <div class="royal-card p-4" style="background-color: rgba(255, 255, 255, 0.9);">
+            <!-- Booking Steps -->
+            <div class="booking-steps">
+              <div class="step-icons">
+                <div class="step-icon completed">
+                  <div class="icon-container">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <span class="step-title">TRAVEL DATE</span>
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step-icon completed">
+                  <div class="icon-container">
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                  <span class="step-title">CART</span>
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step-icon active">
+                  <div class="icon-container">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <span class="step-title">BOOKING INFO</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-icon">
+                  <div class="icon-container">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <span class="step-title">PAYMENT</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+            <!-- Booking Form Column -->
+<div class="col-md-8">
+  <div class="form-section">
+    <h4 class="royal-header mb-4">Personal Information</h4>
+    
+    <form>
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="firstName" class="form-label mb-0">First Name</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" required>
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="lastName" class="form-label mb-0">Last Name</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" required>
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="email" class="form-label mb-0">Email Address</label>
+        </div>
+        <div class="col-md-9">
+          <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="confirmEmail" class="form-label mb-0">Confirm Email</label>
+        </div>
+        <div class="col-md-9">
+          <input type="email" class="form-control" id="confirmEmail" placeholder="Re-enter your email" required>
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="country" class="form-label mb-0">Country</label>
+        </div>
+        <div class="col-md-9"   style="width:320px;margin-right: 100px;">
+          <select class="form-select" id="country" required>
+            <option value="" selected disabled>Select your country</option>
+            <option value="Sri Lanka">Sri Lanka</option>
+            <option value="India">India</option>
+            <option value="USA">United States</option>
+            <option value="UK">United Kingdom</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="phone" class="form-label mb-0">Mobile Number - In your country</label>
+        </div>
+        <div class="col-md-9">
+          <input type="tel" class="form-control" id="phone" placeholder="Enter your mobile number" required>
+        </div>
+      </div>
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="phone" class="form-label mb-0">Phone Number(s) - In Sri Lanka</label>
+        </div>
+        <div class="col-md-9">
+          <input type="tel" class="form-control" id="phone" placeholder="Enter your mobile number" required>
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="hotel" class="form-label mb-0">Hotel You're Staying At</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="form-control" id="hotel" placeholder="Enter your hotel name">
+        </div>
+      </div>
+      
+      <div class="row mb-3 align-items-center">
+        <div class="col-md-3">
+          <label for="specialRequests" class="form-label mb-0">Special Requests</label>
+        </div>
+        <div class="col-md-9">
+          <textarea class="form-control" id="specialRequests" rows="3" placeholder="Any special requirements or notes"></textarea>
+        </div>
+      </div>
+      
+      <div class="row mb-4" style="margin-right: 190px;">
+        <div class="col-md-9 offset-md-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="termsCheck" required>
+            <label class="form-check-label" for="termsCheck" >
+              I agree to the <a href="#" class="gold-accent">Terms & Conditions</a> and <a href="#" class="gold-accent">Privacy Policy</a>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-between">
+        <a href="cart.html" class="btn btn-outline-secondary">
+          <i class="ri-arrow-left-line"></i> Back to Cart
+        </a>
+        <button type="submit" class="royal-btn px-4"  style="margin-right: 280px;">
+          Proceed to Payment <i class="ri-arrow-right-line"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+              
+              <!-- Order Summary Column -->
+              <div class="col-md-4">
+                <div class="cart-summary">
+                  <h4 class="royal-header summary-title">Order Summary</h4>
+                  
+                  <div id="order-items-container">
+                    <!-- Cart items will be dynamically inserted here -->
+                  </div>
+                  
+                  <div class="d-flex justify-content-between mt-3 mb-2">
+                    <span>Subtotal:</span>
+                    <span class="fw-bold" id="subtotal-price">Rs 0.00</span>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Service Charge:</span>
+                    <span id="service-charge">Rs 200.00</span>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="d-flex justify-content-between mb-4">
+                    <span class="fw-bold">Total:</span>
+                    <span class="fw-bold gold-accent" id="total-price">Rs 0.00</span>
+                  </div>
+                  
+                  <div class="alert alert-info">
+                    <i class="ri-information-line"></i> Your booking is not confirmed until payment is completed.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-3 royal-bg">
+      <div class="container">
+        <h6 class="footer_h6 text-center m-0">© 2025 Kitulgala WB Camp - Kitulgala Adventures in Sri Lanka</h6>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  // Load cart items and package from localStorage
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  const package = JSON.parse(localStorage.getItem('currentPackage'));
+  const orderItemsContainer = document.getElementById('order-items-container');
+  const subtotalPriceElement = document.getElementById('subtotal-price');
+  const serviceChargeElement = document.getElementById('service-charge');
+  const totalPriceElement = document.getElementById('total-price');
+  const conversionRate = 300; // 1 USD = 300 LKR
+  const baseServiceCharge = 200; // Rs 200 service charge
+  
+  // Function to calculate the subtotal price including package if available
+  const calculateSubtotal = () => {
+    // Calculate subtotal from cart items
+    const itemsSubtotal = cartItems.reduce((total, item) => {
+      const priceStr = item.price.toString();
+      const priceValue = parseFloat(priceStr.replace(/[^\d.]/g, ''));
+      const isDollar = priceStr.includes('$');
+      const priceInRs = isDollar ? priceValue * conversionRate : priceValue;
+      return total + (priceInRs * parseInt(item.quantity, 10));
+    }, 0);
+
+    // Add package price if available
+    if (package) {
+      const packagePriceStr = package.price.toString();
+      const packagePriceValue = parseFloat(packagePriceStr.replace(/[^\d.]/g, ''));
+      const isPackageDollar = packagePriceStr.includes('$');
+      const packagePriceInRs = isPackageDollar ? packagePriceValue * conversionRate : packagePriceValue;
+      return itemsSubtotal + packagePriceInRs;
+    }
+
+    return itemsSubtotal;
+  };
+
+  // Function to update all prices based on currency
+  const updateAllPrices = (currency) => {
+    const subtotal = calculateSubtotal();
+    let serviceCharge, total;
+    
+    if (currency === '$') {
+      // Convert to dollars
+      subtotalPriceElement.textContent = `$${(subtotal / conversionRate).toFixed(2)}`;
+      serviceCharge = baseServiceCharge / conversionRate;
+      serviceChargeElement.textContent = `$${serviceCharge.toFixed(2)}`;
+      total = (subtotal + baseServiceCharge) / conversionRate;
+      totalPriceElement.textContent = `$${total.toFixed(2)}`;
+    } else {
+      // Keep in rupees
+      subtotalPriceElement.textContent = `Rs ${subtotal.toFixed(2)}`;
+      serviceChargeElement.textContent = `Rs ${baseServiceCharge.toFixed(2)}`;
+      total = subtotal + baseServiceCharge;
+      totalPriceElement.textContent = `Rs ${total.toFixed(2)}`;
+    }
+  };
+
+  // Function to render order items including package if available
+  const renderOrderItems = () => {
+    orderItemsContainer.innerHTML = ''; // Clear the container
+    
+    if (cartItems.length === 0 && !package) {
+      orderItemsContainer.innerHTML = `
+        <div class="text-center py-3">
+          <i class="ri-shopping-cart-line" style="font-size: 24px; color: #ccc;"></i>
+          <p class="text-muted">No items in your order</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Add package to order items if available
+    if (package) {
+      const packageItem = document.createElement('div');
+      packageItem.classList.add('d-flex', 'align-items-center', 'mb-3');
+      
+      packageItem.innerHTML = `
+        <img src="${package.image}" alt="${package.name}" class="cart-item-img me-3">
+        <div class="flex-grow-1">
+          <h6 class="mb-1" style="font-size: 0.9rem;">${package.name}</h6>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted" style="font-size: 0.8rem;">1 x ${package.price}</span>
+          </div>
+        </div>
+      `;
+      orderItemsContainer.appendChild(packageItem);
+    }
+
+    // Add cart items
+    cartItems.forEach((item) => {
+      const orderItem = document.createElement('div');
+      orderItem.classList.add('d-flex', 'align-items-center', 'mb-3');
+      
+      orderItem.innerHTML = `
+        <img src="${item.image}" alt="${item.title}" class="cart-item-img me-3">
+        <div class="flex-grow-1">
+          <h6 class="mb-1" style="font-size: 0.9rem;">${item.title}</h6>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted" style="font-size: 0.8rem;">${item.quantity} x ${item.price}</span>
+          </div>
+        </div>
+      `;
+      orderItemsContainer.appendChild(orderItem);
+    });
+
+    // Update all prices based on current currency
+    const savedCurrency = localStorage.getItem('currency') || 'Rs';
+    updateAllPrices(savedCurrency);
+  };
+
+  // Initial render
+  renderOrderItems();
+
+  // Listen for currency changes (from popup.js)
+  window.addEventListener('currencyChange', () => {
+    const savedCurrency = localStorage.getItem('currency') || 'Rs';
+    updateAllPrices(savedCurrency);
+  });
+
+  // Form submission
+  document.querySelector('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Validate form
+    if (document.getElementById('termsCheck').checked) {
+      // Save form data to localStorage
+      const formData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        country: document.getElementById('country').value,
+        phone: document.getElementById('phone').value,
+        hotel: document.getElementById('hotel').value,
+        specialRequests: document.getElementById('specialRequests').value
+      };
+      localStorage.setItem('bookingInfo', JSON.stringify(formData));
+      
+      // Proceed to payment page
+      window.location.href = "payment.html";
+    } else {
+      alert('Please agree to the Terms & Conditions to proceed.');
+    }
+  });
+});
+
+    // Hide the loader and show the main content after 2 seconds
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      const mainContent = document.getElementById('main-content');
+  
+      if (loader && mainContent) {
+        loader.style.display = 'none';
+        mainContent.style.display = 'block';
+      }
+    }, 2000);
+  </script>
+</body>
+</html>

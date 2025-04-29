@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kithulgala Water Rafting | Sri Lanka Adventure</title>
+  <meta name="description" content="Experience thrilling white water rafting in Kithulgala, Sri Lanka. Professional guides, safety equipment, and unforgettable adventures on the Kelani River.">
+  
+  <!-- Font Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #0a2463;
+      --secondary-color: #3e92cc;
+      --accent-color: #d8315b;
+      --light-color: #fffaff;
+      --dark-color: #1e1b18;
+      --gold-color: #d4af37;
+      --text-color: #333;
+      --text-light: #777;
+    }
+    
+    body {
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      overflow-x: hidden;
+      background-color: #f5f5f5;
+      line-height: 1.6;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    
+    /* Loader Styles */
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--light-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--primary-color);
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Popup Styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 400px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: var(--accent-color);
+    }
+
+    .choose_b {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    /* Navigation */
+    .navbar {
+      background-color: rgba(10, 36, 99, 0.95) !important;
+      backdrop-filter: blur(10px);
+      padding: 20px 0;
+      height: 70px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .navbar.scrolled {
+      padding: 10px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .nav-link {
+      color: white !important;
+      font-weight: 600;
+      margin: 0 12px;
+      position: relative;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--gold-color);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .nav_topic{
+      font-family: "Lilita One", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 20px;
+  color: white;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      filter: brightness(0.6);
+    }
+    
+    .hero-content {
+      position: absolute;
+      bottom: 20%;
+      left: 0;
+      width: 100%;
+      padding: 0 50px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    
+    /* Language Greeting Animation */
+    .greeting-container {
+      position: relative;
+      height: 60px;
+      overflow: hidden;
+    }
+    
+    .greeting-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: var(--gold-color);
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      opacity: 0;
+      transition: all 0.5s ease;
+      margin-top: -20px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .greeting-text.active {
+      opacity: 1;
+    }
+    
+    /* About Section */
+    .about-section {
+      padding: 100px 0;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('images/pic03.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: white;
+      position: relative;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--gold-color);
+      margin-bottom: 50px;
+      position: relative;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background-color: var(--gold-color);
+      border-radius: 3px;
+    }
+    
+    /* Carousel */
+    .rafting-carousel {
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      border: 3px solid var(--gold-color);
+      margin-top: 50px;
+      transition: transform 0.3s ease;
+    }
+    
+    .rafting-carousel:hover {
+      transform: translateY(-5px);
+    }
+    
+    .rafting-carousel .carousel-item img {
+      height: 500px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .rafting-carousel .carousel-item:hover img {
+      transform: scale(1.03);
+    }
+    
+    .carousel-caption {
+      background: rgba(0,0,0,0.6);
+      border-radius: 10px;
+      padding: 20px;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+    }
+    
+    /* Contact Section */
+    .contact-section {
+      padding: 100px 0;
+      background-color: var(--light-color);
+    }
+    
+    .contact-card {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+    
+    .map-container {
+      height: 100%;
+      min-height: 400px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, var(--primary-color), #1a3a8f);
+      color: white;
+      padding: 70px 0 30px;
+      position: relative;
+    }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--gold-color), var(--accent-color));
+    }
+    
+    .footer-logo {
+      max-height: 80px;
+      margin-bottom: 20px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .social-icons a {
+      color: white;
+      font-size: 20px;
+      margin-right: 15px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    
+    .social-icons a:hover {
+      color: var(--gold-color);
+      transform: translateY(-5px) scale(1.1);
+    }
+    
+    /* Button Styles */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0c2e7a;
+      border-color: #0c2e7a;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .btn-outline-light {
+      transition: all 0.3s ease;
+    }
+    
+    .btn-outline-light:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* Back to Top Button */
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      z-index: 99;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      border: none;
+    }
+    
+    #backToTop:hover {
+      background-color: var(--gold-color);
+      transform: translateY(-5px);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-content {
+        bottom: 15%;
+        padding: 0 20px;
+      }
+      
+      .greeting-text {
+        font-size: 2.5rem;
+      }
+      
+      .rafting-carousel .carousel-item img {
+        height: 300px;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .navbar {
+        padding: 15px 0;
+        height: auto;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .greeting-text {
+        font-size: 2rem;
+      }
+      
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-content p {
+        font-size: 1rem;
+      }
+    }
+    
+    /* Animation Classes */
+    .fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.8s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Maven+Pro:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Popup for currency selection -->
+  <div id="popup" class="popup">
+    <div class="popup-content slide-up">
+      <span id="closePopup" class="close">&times;</span>
+      <h2>Choose Your Currency</h2>
+      <p>Please select your preferred currency for pricing:</p>
+      <div class="choose_b">
+        <button id="localButton" class="btn btn-primary rounded-pill px-4 me-2">Local (Rs)</button>
+        <button id="foreignButton" class="btn btn-primary rounded-pill px-4">Foreign ($)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div class="loader-container" id="loader">
+    <span class="loader"></span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="images/logo.png" alt="Kithulgala Water Rafting Logo" style="height: 50px;">
+      </a>
+      <span  class="nav_topic">Kithulgala Water Rafting</span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="activity.html">Activities</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              Go Mart
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="shopping mart.html">All Products</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Biscuits</a></li>
+              <li><a class="dropdown-item" href="#">Beverages</a></li>
+              <li><a class="dropdown-item" href="#">Bath Items</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn btn-outline-light rounded-pill px-4" href="booking.html">Book Now</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <video autoplay loop muted playsinline class="hero-video">
+      <source src="images/mart_video.mp4" type="video/mp4">
+      <img src="images/pic01.jpg" alt="Kithulgala Water Rafting">
+    </video>
+    
+    <div class="hero-content">
+      <div class="container">
+        <div class="greeting-container mb-3">
+          <div class="greeting-text active">ආයුබෝවන්...</div>
+          <div class="greeting-text">AURBORWAN...</div>
+          <div class="greeting-text">வணக்கம்...</div>
+        </div>
+        <div style="margin-top: 50px;">
+          <h1 class="hero-title display-3 fw-bold mb-4">Kithulgala White Water Rafting</h1>
+          <p class="lead mb-5 fs-4">Experience the thrill of Sri Lanka's best white water rafting adventure</p>
+          <a href="activity.html" class="btn btn-primary btn-lg px-5 py-3 rounded-pill">Book Your Adventure</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2 class="section-title">ABOUT OUR SERVICE</h2>
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0 position-relative">
+          <div class="ratio ratio-16x9" style="margin-bottom: 100px; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);">
+            <video autoplay loop muted playsinline class="rounded-3">
+              <source src="images/about video.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <p class="lead fs-5">Nestled in the heart of Sri Lanka's lush rainforest, Kithulgala offers one of the most exhilarating white water rafting experiences in South Asia.</p>
+          <p>The Kelani River provides perfect conditions for both beginners and experienced rafters, with Class II and III rapids that promise an unforgettable adventure. Our professional guides ensure your safety while you navigate through breathtaking scenery of dense tropical forests and crystal-clear waters.</p>
+          <p>After your rafting experience, explore nearby attractions including jungle waterfalls, prehistoric caves, and scenic hiking trails that showcase Sri Lanka's incredible biodiversity.</p>
+          <div class="mt-4">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-check-circle me-3" style="color: var(--gold-color); font-size: 1.5rem;"></i>
+              <span class="fs-5">Professional ISA Certified Guides</span>
+            </div>
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-check-circle me-3" style="color: var(--gold-color); font-size: 1.5rem;"></i>
+              <span class="fs-5">International Standard Safety Equipment</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-check-circle me-3" style="color: var(--gold-color); font-size: 1.5rem;"></i>
+              <span class="fs-5">12+ Years of Experience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activities Carousel -->
+  <section id="activities" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title text-dark">OUR RAFTING ADVENTURES</h2>
+      <div id="raftingCarousel" class="carousel slide rafting-carousel" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#raftingCarousel" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#raftingCarousel" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#raftingCarousel" data-bs-slide-to="2"></button>
+          <button type="button" data-bs-target="#raftingCarousel" data-bs-slide-to="3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="images/pic01.jpg" class="d-block w-100" alt="Rafting adventure 1">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Class III Rapids</h5>
+              <p>Exciting challenges for experienced rafters</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="images/pic02.jpg" class="d-block w-100" alt="Rafting adventure 2">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Team Adventure</h5>
+              <p>Perfect for groups and team building</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="images/pic03.jpg" class="d-block w-100" alt="Rafting adventure 3">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Scenic Routes</h5>
+              <p>Beautiful tropical landscapes</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="images/pic04.jpg" class="d-block w-100" alt="Rafting adventure 4">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Professional Guides</h5>
+              <p>Safety and fun guaranteed</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#raftingCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#raftingCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2 class="section-title text-dark">CONTACT US</h2>
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="contact-card h-100">
+            <div class="map-container">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31680.83245041248!2d80.37197811562498!3d6.9970256000000015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae39fbddbccca05%3A0xdd785f217f14c5bf!2s37%20Rafting%20Team!5e0!3m2!1sen!2slk!4v1738856262835!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="contact-card h-100 p-4 p-md-5">
+            <h3 class="mb-4">Get in Touch</h3>
+            <form>
+              <div class="mb-3">
+                <label for="name" class="form-label">Your Name</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Your Message</label>
+                <textarea class="form-control" id="message" rows="4" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 py-3">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <img src="images/logo.png" alt="Kithulgala Water Rafting" class="footer-logo">
+          <p class="mt-3">Providing unforgettable white water rafting experiences in Sri Lanka since 2010. Safety, adventure, and professionalism at its best.</p>
+          <div class="social-icons mt-4">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-tripadvisor"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h5 class="mb-4">Quick Links</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+            <li class="mb-2"><a href="#about" class="text-white text-decoration-none">About Us</a></li>
+            <li class="mb-2"><a href="#activities" class="text-white text-decoration-none">Activities</a></li>
+            <li class="mb-2"><a href="shopping-mart.html" class="text-white text-decoration-none">Go Mart</a></li>
+            <li class="mb-2"><a href="#contact" class="text-white text-decoration-none">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h5 class="mb-4">Contact Info</h5>
+          <ul class="list-unstyled">
+            <li class="mb-3"><i class="fas fa-map-marker-alt me-2"></i> Kithulgala, Sri Lanka</li>
+            <li class="mb-3"><i class="fas fa-phone me-2"></i> +94 77 123 4567</li>
+            <li class="mb-3"><i class="fas fa-envelope me-2"></i> info@kithulgalarafting.com</li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h5 class="mb-4">Newsletter</h5>
+          <p>Subscribe to get special offers and updates</p>
+          <form class="mt-3">
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" placeholder="Your Email">
+              <button class="btn btn-outline-light" type="submit">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr class="mt-5 mb-4" style="border-color: rgba(255,255,255,0.1);">
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start">
+          <p class="mb-0">&copy; 2024 Kithulgala Water Rafting. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <p class="mb-0">Designed with <i class="fas fa-heart text-danger"></i> in Sri Lanka</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <a href="#" class="btn btn-lg back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Custom JS -->
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      const backToTop = document.getElementById('backToTop');
+      
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+        backToTop.style.display = 'flex';
+      } else {
+        navbar.classList.remove('scrolled');
+        backToTop.style.display = 'none';
+      }
+    });
+    
+    // Back to top button
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Popup functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const popup = document.getElementById('popup');
+      const localButton = document.getElementById('localButton');
+      const foreignButton = document.getElementById('foreignButton');
+      const closePopup = document.getElementById('closePopup');
+
+      // Show popup on page load with delay
+      setTimeout(() => {
+        popup.style.display = 'flex';
+        document.querySelector('.popup-content').classList.add('slide-up');
+      }, 1000);
+
+      // Close popup when close button is clicked
+      closePopup.addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+
+      // Local button click event
+      localButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+        localStorage.setItem('currency', 'Rs');
+        localStorage.setItem('currencyUpdated', Date.now().toString());
+        window.dispatchEvent(new Event('currencyChange'));
+      });
+
+      foreignButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+        localStorage.setItem('currency', '$');
+        localStorage.setItem('currencyUpdated', Date.now().toString());
+        window.dispatchEvent(new Event('currencyChange'));
+      });
+
+      // Function to update prices based on currency
+      function updatePrices(currency) {
+        const prices = document.querySelectorAll('.product-price, .cart-item-price, .total-price');
+        const conversionRate = 300; // 1 USD = 300 LKR
+
+        prices.forEach(priceElement => {
+          let priceText = priceElement.textContent.trim();
+          let priceValue;
+
+          if (priceText.includes('Rs')) {
+            priceValue = parseFloat(priceText.replace('Rs', '').trim());
+          } else if (priceText.includes('$')) {
+            priceValue = parseFloat(priceText.replace('$', '').trim());
+          } else {
+            priceValue = parseFloat(priceText);
+          }
+
+          if (isNaN(priceValue)) {
+            console.warn(`Invalid price value: ${priceText}`);
+            return;
+          }
+
+          if (currency === '$') {
+            priceElement.textContent = `$${(priceValue / conversionRate).toFixed(2)}`;
+          } else {
+            priceElement.textContent = `Rs ${(priceValue * conversionRate).toFixed(2)}`;
+          }
+        });
+      }
+
+      // Check localStorage for currency preference on page load
+      const savedCurrency = localStorage.getItem('currency') || 'Rs';
+      updatePrices(savedCurrency);
+
+      // Listen for currency change events
+      window.addEventListener('currencyChange', () => {
+        const currentCurrency = localStorage.getItem('currency') || 'Rs';
+        updatePrices(currentCurrency);
+      });
+    });
+
+    // Loader
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(function() {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Language greeting animation
+    const greetings = document.querySelectorAll('.greeting-text');
+    let currentGreeting = 0;
+    
+    function rotateGreetings() {
+      greetings[currentGreeting].classList.remove('active');
+      currentGreeting = (currentGreeting + 1) % greetings.length;
+      greetings[currentGreeting].classList.add('active');
+    }
+    
+    // Start the greeting rotation
+    setInterval(rotateGreetings, 4000);
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
+    // Add animation classes when elements come into view
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.about-section, .rafting-carousel, .contact-card');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if (elementPosition < screenPosition) {
+          element.classList.add('fade-in');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>

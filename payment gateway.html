@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Payment | Rapid Adventures</title>
+  <a href="index3.html" class="pay-button">PAY NOW</a>
+
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('water rafting pic.jpg');
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    .container {
+      background: linear-gradient(135deg, #66b94e, #1a1c39);
+      border-radius: 20px;
+      padding: 30px;
+      width: 500px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      height: 40px;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row input {
+      flex: 1;
+    }
+
+    .total {
+      margin: 15px 0;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #f46a1c;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #d45a18;
+    }
+
+    .powered {
+      margin-top: 15px;
+      font-size: 12px;
+      text-align: center;
+      opacity: 0.8;
+    }
+
+    .logos {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .logos img {
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <img src="cargills bank.jpg" alt="CargillsBank" />
+      <img src="logo.jpg" alt="Rapid Adventures" height="40" />
+    </div>
+
+    <h3>Please enter your Card Information</h3>
+
+    <form onsubmit="handleSubmit(event)">
+      <input type="text" placeholder="Enter Card Number" required />
+      <input type="text" placeholder="Card Holder Name and Surname" required />
+
+      <div class="row">
+        <input type="number" placeholder="MM" required />
+        <input type="number" placeholder="YY" required />
+        <input type="number" placeholder="CVV" required />
+      </div>
+
+      <div class="total">Total Price<br><span>Rs. 2,059.00</span></div>
+
+      <button class="btn" type="submit">PAY NOW</button>
+    </form>
+
+    <div class="powered">POWERED BY WEBXPAY</div>
+
+    <div class="logos">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="MasterCard" />
+      <img src="amex.jpg" alt="AMEX" />
+    </div>
+  </div>
+  
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      alert("Payment submitted successfully!");
+    }
+  </script>
+
+</body>
+</html>

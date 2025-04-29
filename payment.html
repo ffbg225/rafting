@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Mart - Payment Information</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:wght@400;700&family=Lilita+One&family=Maven+Pro:wght@400..900&display=swap" rel="stylesheet">
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://example.com/images/favicon.ico" type="image/x-icon">
+  <script src="popup.js"></script>
+  <style>
+    :root {
+      --primary: #071349; /* Royal blue */
+      --gold: #d4af37;   /* Gold color */
+      --success: #28a745; /* Success green */
+    }
+
+    /* Additional Royal Styling */
+    .royal-header {
+      font-family: 'Cinzel', serif;
+      color: #d4af37; /* Gold color */
+    }
+    
+    .royal-body {
+      font-family: 'Lora', serif;
+    }
+    
+    .royal-bg {
+      background-color: #071349;
+    }
+    
+    .gold-accent {
+      color: #d4af37;
+    }
+    
+    .royal-card {
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+    
+    .royal-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .royal-btn {
+      background-color: #d4af37;
+      color: #071349;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .royal-btn:hover {
+      background-color: #b6982a;
+      color: #fff;
+    }
+    
+    .payment-form-container {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form-control {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 5px 5px;
+      max-width: 800px; /* limit width */
+      margin-right: 200px;
+      width: 300px;
+    }
+    
+    .form-control:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+    }
+    
+    .form-label {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    /* Navigation */
+    .navbar {
+      background-color: rgba(10, 36, 99, 0.9) !important;
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      height: 60px;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 10px 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      margin: 0 10px;
+      position: relative;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--gold);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Booking Steps */
+    .booking-steps {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(193, 154, 107, 0.2);
+    }
+
+    .step-icons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .step-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex: 1;
+      z-index: 1;
+    }
+
+    .step-icon.active .icon-container {
+      background-color: var(--gold);
+      color: var(--primary);
+      box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.2);
+    }
+
+    .step-icon.completed .icon-container {
+      background-color: var(--primary);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+    }
+
+    .icon-container {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(10, 26, 74, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      border: 2px solid transparent;
+    }
+
+    .step-line {
+      flex-grow: 1;
+      height: 2px;
+      background-color: rgba(10, 26, 74, 0.2);
+      margin: 0 1rem;
+      position: relative;
+      top: -15px;
+    }
+
+    .step-line.active,
+    .step-line.completed {
+      background-color: var(--gold);
+    }
+
+    .step-title {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .step-icon.completed .step-title {
+      color: var(--primary);
+    }
+
+    /* Loader */
+    .loader-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #d4af37;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Video Background */
+    .video-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Form Section */
+    .form-section {
+      background-color: #ffffff; /* white background */
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 800px; /* limit width */
+      margin: 0 auto; /* center align */
+    }
+
+    /* Cart Summary */
+    .cart-summary {
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      height: 100%;
+    }
+
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .summary-title {
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* Payment Methods */
+    .payment-method {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-method:hover {
+      border-color: var(--gold);
+      background-color: rgba(212, 175, 55, 0.05);
+    }
+
+    .payment-method.active {
+      border-color: var(--gold);
+      background-color: rgba(212, 175, 55, 0.1);
+    }
+
+    .payment-method img {
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    /* Credit Card Form */
+    .card-element {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      background: white;
+    }
+    
+    /* Payment Confirmation Modal */
+    .payment-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .payment-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .payment-modal-content {
+      background: white;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      overflow: hidden;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .payment-modal.active .payment-modal-content {
+      transform: translateY(0);
+    }
+    
+    .payment-modal-header {
+      background: linear-gradient(135deg, var(--primary) 0%, #0a2463 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .payment-modal-header h3 {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+    }
+    
+    .payment-modal-body {
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .payment-success-icon {
+      width: 80px;
+      height: 80px;
+      background-color: #4CAF50;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px;
+      animation: bounceIn 0.6s ease;
+    }
+    
+    @keyframes bounceIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    
+    .payment-success-icon i {
+      color: white;
+      font-size: 40px;
+    }
+    
+    .payment-details {
+      margin: 20px 0;
+      text-align: left;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+    
+    .payment-detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .payment-detail-label {
+      font-weight: 600;
+      color: #555;
+    }
+    
+    .payment-detail-value {
+      color: #333;
+    }
+    
+    .payment-modal-footer {
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid #eee;
+    }
+    
+    .payment-modal-btn {
+      background-color: var(--gold);
+      color: var(--primary);
+      border: none;
+      padding: 10px 25px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .payment-modal-btn:hover {
+      background-color: #b6982a;
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    /* Payment Processing Animation */
+    .payment-processing {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .payment-processing.active {
+      display: block;
+    }
+    
+    .processing-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(212, 175, 55, 0.2);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    .processing-text {
+      font-size: 18px;
+      color: var(--primary);
+      margin-top: 10px;
+    }
+ /* Paypal bank transfer*/
+    .payment-method-content {
+      display: none;
+      padding: 15px;
+      background-color: rgba(212, 175, 55, 0.05);
+      border-radius: 8px;
+      margin-top: 15px;
+      border: 1px dashed rgba(212, 175, 55, 0.3);
+    }
+
+    .payment-method.active .payment-method-content {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .file-upload {
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .file-upload-input {
+      position: absolute;
+      font-size: 100px;
+      opacity: 0;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+
+    .file-upload-label {
+      display: block;
+      padding: 10px 15px;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload-label:hover {
+      background-color: #e9ecef;
+    }
+
+    .file-upload-name {
+      margin-top: 5px;
+      font-size: 0.8rem;
+      color: #6c757d;
+    }
+
+    .payment-instructions {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+
+    .bank-details {
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 3px solid var(--gold);
+    }
+
+    .bank-details h6 {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .bank-details p {
+      margin-bottom: 5px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loader-container" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Main Content (hidden initially) -->
+  <div class="main-content" id="main-content" style="display: none;">
+    <!-- Video Background -->
+    <div class="video-container">
+      <video autoplay loop muted playsinline class="background-video">
+        <source src="images/mart.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="images/logo.png" alt="Kithulgala Water Rafting Logo" style="height: 50px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#activities">Activities</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                Go Mart
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="shopping mart.html">All Products</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Biscuits</a></li>
+                <li><a class="dropdown-item" href="#">Beverages</a></li>
+                <li><a class="dropdown-item" href="#">Bath Items</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item ms-lg-3">
+              <a class="btn btn-outline-light rounded-pill px-4" href="booking.html">Book Now</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Booking Container -->
+    <div class="container mt-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-10" style="margin-top: 50px;">
+          <div class="royal-card p-4" style="background-color: rgba(255, 255, 255, 0.9);">
+            <!-- Booking Steps -->
+            <div class="booking-steps">
+              <div class="step-icons">
+                <div class="step-icon completed">
+                  <div class="icon-container">
+                    <i class="fas fa-calendar-alt"></i>
+                  </div>
+                  <span class="step-title">TRAVEL DATE</span>
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step-icon completed">
+                  <div class="icon-container">
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                  <span class="step-title">CART</span>
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step-icon completed">
+                  <div class="icon-container">
+                    <i class="fas fa-info-circle"></i>
+                  </div>
+                  <span class="step-title">BOOKING INFO</span>
+                </div>
+                <div class="step-line completed"></div>
+                <div class="step-icon active">
+                  <div class="icon-container">
+                    <i class="fas fa-credit-card"></i>
+                  </div>
+                  <span class="step-title">PAYMENT</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Payment Form Column -->
+              <div class="col-md-8">
+                <div class="form-section">
+                  <h4 class="royal-header mb-4">Billing Information</h4>
+                  
+                  <!-- Display Booking Info from Previous Page -->
+                  <div class="mb-4 p-3" style="background-color: #f9f9f9; border-radius: 8px; border-left: 3px solid var(--gold);">
+                    <h5 class="gold-accent mb-3">Your Booking Details</h5>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <p><strong>Name:</strong> <span id="display-name"></span></p>
+                        <p><strong>Email:</strong> <span id="display-email"></span></p>
+                        <p><strong>Country:</strong> <span id="display-country"></span></p>
+                      </div>
+                      <div class="col-md-6">
+                        <p><strong>Phone:</strong> <span id="display-phone"></span></p>
+                        <p><strong>Local Phone:</strong> <span id="display-local-phone"></span></p>
+                        <p><strong>Hotel:</strong> <span id="display-hotel"></span></p>
+                      </div>
+                    </div>
+                    <p class="mt-2"><strong>Special Requests:</strong> <span id="display-requests"></span></p>
+                  </div>
+
+                   <!-- Payment Methods -->
+  <div class="mb-4">
+    <h5 class="gold-accent mb-3">Select Payment Method</h5>
+    
+    <div class="payment-method active" onclick="selectPaymentMethod(this, 'card')">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+        <label class="form-check-label" for="creditCard">
+          <img src="images/credit-card.png" alt="Credit Card"> Credit/Debit Card
+        </label>
+      </div>
+      <div class="payment-method-content" id="card-content">
+        <div class="mb-3">
+          <label for="cardNumber" class="form-label">Card Number</label>
+          <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="expiryDate" class="form-label">Expiry Date</label>
+            <input type="text" class="form-control"  style="width: 120px;" id="expiryDate" placeholder="MM/YY">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="cvv" class="form-label">CVV</label>
+            <input type="text" class="form-control"  style="width: 50px;" id="cvv" placeholder="123">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="cardName" class="form-label">Name on Card</label>
+          <input type="text" class="form-control" id="cardName" placeholder="As it appears on your card">
+        </div>
+      </div>
+    </div>
+    
+    <div class="payment-method" onclick="selectPaymentMethod(this, 'paypal')">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+        <label class="form-check-label" for="paypal">
+          <img src="images/paypal.png" alt="PayPal"> 
+        </label>
+      </div>
+      <div class="payment-method-content" id="paypal-content">
+        <div class="mb-3">
+          <label for="paypalEmail" class="form-label">PayPal Email Address</label>
+          <input type="email" class="form-control" id="paypalEmail" placeholder="your@email.com">
+        </div>
+        <div class="payment-instructions">
+          <i class="ri-information-line"></i> You will be redirected to PayPal to complete your payment.
+        </div>
+      </div>
+    </div>
+    
+    <div class="payment-method" onclick="selectPaymentMethod(this, 'bank')">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer">
+        <label class="form-check-label" for="bankTransfer">
+          <img src="images/bank_transfer.png" alt="Bank Transfer"> 
+        </label>
+      </div>
+      <div class="payment-method-content" id="bank-content">
+        <div class="bank-details">
+          <h6>Bank Transfer Details</h6>
+          <p><strong>Bank Name:</strong> Commercial Bank</p>
+          <p><strong>Account Name:</strong> Kithulgala WaterRafting Adventure(Pvt) Ltd</p>
+          <p><strong>Account Number:</strong> 1234567890</p>
+          <p><strong>Branch:</strong> Kithulgala Branch</p>
+        
+        </div>
+        <div class="mb-3">
+          <label for="bankSlip" class="form-label">Upload Payment Slip</label>
+          <div class="file-upload">
+            <input type="file" class="file-upload-input" id="bankSlip" accept="image/*,.pdf">
+            <label for="bankSlip" class="file-upload-label">
+              <i class="ri-upload-cloud-line"></i> Choose File
+            </label>
+            <div class="file-upload-name" id="bankSlipName">No file chosen</div>
+          </div>
+        </div>
+        <div class="payment-instructions">
+          <i class="ri-information-line"></i> Please upload a clear image or PDF of your payment slip. Your order will be processed after we verify the payment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+                  <div class="mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="saveCard" checked>
+                      <label class="form-check-label" for="saveCard">
+                        Save card details for future payments
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between">
+                    <a href="booking_info.html" class="btn btn-outline-secondary">
+                      <i class="ri-arrow-left-line"></i> Back to Booking Info
+                    </a>
+                    <button type="button" class="royal-btn px-4" style="margin-right: 10px; width:200px; height: 50px;border-radius: 7px;" onclick="processPayment()">
+                      Complete Payment <i class="ri-arrow-right-line"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Order Summary Column -->
+              <div class="col-md-4">
+                <div class="cart-summary">
+                  <h4 class="royal-header summary-title">Order Summary</h4>
+                  
+                  <div id="order-items-container">
+                    <!-- Cart items will be dynamically inserted here -->
+                  </div>
+                  
+                  <div class="d-flex justify-content-between mt-3 mb-2">
+                    <span>Subtotal:</span>
+                    <span class="fw-bold" id="subtotal-price">Rs 0.00</span>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Service Charge:</span>
+                    <span id="service-charge">Rs 200.00</span>
+                  </div>
+                  
+                  <hr>
+                  
+                  <div class="d-flex justify-content-between mb-4">
+                    <span class="fw-bold">Total:</span>
+                    <span class="fw-bold gold-accent" id="total-price">Rs 0.00</span>
+                  </div>
+                  
+                  <div class="alert alert-info">
+                    <i class="ri-information-line"></i> Your booking will be confirmed immediately after payment.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5 py-3 royal-bg">
+      <div class="container">
+        <h6 class="footer_h6 text-center m-0">© 2025 Kitulgala WB Camp - Kitulgala Adventures in Sri Lanka</h6>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Payment Confirmation Modal -->
+  <div class="payment-modal" id="paymentModal">
+    <div class="payment-modal-content">
+      <div class="payment-modal-header">
+        <h3>Payment Confirmation</h3>
+      </div>
+      <div class="payment-modal-body">
+        <div class="payment-processing active" id="paymentProcessing">
+          <div class="processing-spinner"></div>
+          <div class="processing-text">Processing your payment...</div>
+        </div>
+        
+        <div id="paymentSuccess" style="display: none;">
+          <div class="payment-success-icon">
+            <i class="ri-check-line"></i>
+          </div>
+          <h4 class="mb-3">Payment Successful!</h4>
+          <p>Thank you for your payment. Your booking has been confirmed.</p>
+          
+          <div class="payment-details">
+            <div class="payment-detail-row">
+              <span class="payment-detail-label">Transaction ID:</span>
+              <span class="payment-detail-value" id="transactionId">TXN-987654321</span>
+            </div>
+            <div class="payment-detail-row">
+              <span class="payment-detail-label">Amount Paid:</span>
+              <span class="payment-detail-value" id="paymentAmount">Rs 0.00</span>
+            </div>
+            <div class="payment-detail-row">
+              <span class="payment-detail-label">Payment Method:</span>
+              <span class="payment-detail-value" id="paymentMethod">Credit Card</span>
+            </div>
+            <div class="payment-detail-row">
+              <span class="payment-detail-label">Date & Time:</span>
+              <span class="payment-detail-value" id="paymentDate">Just now</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="payment-modal-footer">
+        <button class="payment-modal-btn" id="continueBtn" style="display: none;" onclick="redirectToConfirmation()">Continue to Booking</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load booking info from localStorage
+      const bookingInfo = JSON.parse(localStorage.getItem('bookingInfo')) || {};
+      
+      // Display booking info
+      document.getElementById('display-name').textContent = `${bookingInfo.firstName || ''} ${bookingInfo.lastName || ''}`;
+      document.getElementById('display-email').textContent = bookingInfo.email || '';
+      document.getElementById('display-country').textContent = bookingInfo.country || '';
+      document.getElementById('display-phone').textContent = bookingInfo.phone || '';
+      document.getElementById('display-local-phone').textContent = bookingInfo.phoneLocal || '';
+      document.getElementById('display-hotel').textContent = bookingInfo.hotel || '';
+      document.getElementById('display-requests').textContent = bookingInfo.specialRequests || 'None';
+      
+      // Load cart items and package from localStorage
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      const package = JSON.parse(localStorage.getItem('currentPackage'));
+      const orderItemsContainer = document.getElementById('order-items-container');
+      const subtotalPriceElement = document.getElementById('subtotal-price');
+      const serviceChargeElement = document.getElementById('service-charge');
+      const totalPriceElement = document.getElementById('total-price');
+      const conversionRate = 300; // 1 USD = 300 LKR
+      const baseServiceCharge = 200; // Rs 200 service charge
+      
+      // Function to calculate the subtotal price including package if available
+      const calculateSubtotal = () => {
+        // Calculate subtotal from cart items
+        const itemsSubtotal = cartItems.reduce((total, item) => {
+          const priceStr = item.price.toString();
+          const priceValue = parseFloat(priceStr.replace(/[^\d.]/g, ''));
+          const isDollar = priceStr.includes('$');
+          const priceInRs = isDollar ? priceValue * conversionRate : priceValue;
+          return total + (priceInRs * parseInt(item.quantity, 10));
+        }, 0);
+
+        // Add package price if available
+        if (package) {
+          const packagePriceStr = package.price.toString();
+          const packagePriceValue = parseFloat(packagePriceStr.replace(/[^\d.]/g, ''));
+          const isPackageDollar = packagePriceStr.includes('$');
+          const packagePriceInRs = isPackageDollar ? packagePriceValue * conversionRate : packagePriceValue;
+          return itemsSubtotal + packagePriceInRs;
+        }
+
+        return itemsSubtotal;
+      };
+
+      // Function to update all prices based on currency
+      const updateAllPrices = (currency) => {
+        const subtotal = calculateSubtotal();
+        let serviceCharge, total;
+        
+        if (currency === '$') {
+          // Convert to dollars
+          subtotalPriceElement.textContent = `$${(subtotal / conversionRate).toFixed(2)}`;
+          serviceCharge = baseServiceCharge / conversionRate;
+          serviceChargeElement.textContent = `$${serviceCharge.toFixed(2)}`;
+          total = (subtotal + baseServiceCharge) / conversionRate;
+          totalPriceElement.textContent = `$${total.toFixed(2)}`;
+        } else {
+          // Keep in rupees
+          subtotalPriceElement.textContent = `Rs ${subtotal.toFixed(2)}`;
+          serviceChargeElement.textContent = `Rs ${baseServiceCharge.toFixed(2)}`;
+          total = subtotal + baseServiceCharge;
+          totalPriceElement.textContent = `Rs ${total.toFixed(2)}`;
+        }
+      };
+
+      // Function to render order items including package if available
+      const renderOrderItems = () => {
+        orderItemsContainer.innerHTML = ''; // Clear the container
+        
+        if (cartItems.length === 0 && !package) {
+          orderItemsContainer.innerHTML = `
+            <div class="text-center py-3">
+              <i class="ri-shopping-cart-line" style="font-size: 24px; color: #ccc;"></i>
+              <p class="text-muted">No items in your order</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Add package to order items if available
+        if (package) {
+          const packageItem = document.createElement('div');
+          packageItem.classList.add('d-flex', 'align-items-center', 'mb-3');
+          
+          packageItem.innerHTML = `
+            <img src="${package.image}" alt="${package.name}" class="cart-item-img me-3">
+            <div class="flex-grow-1">
+              <h6 class="mb-1" style="font-size: 0.9rem;">${package.name}</h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted" style="font-size: 0.8rem;">1 x ${package.price}</span>
+              </div>
+            </div>
+          `;
+          orderItemsContainer.appendChild(packageItem);
+        }
+
+        // Add cart items
+        cartItems.forEach((item) => {
+          const orderItem = document.createElement('div');
+          orderItem.classList.add('d-flex', 'align-items-center', 'mb-3');
+          
+          orderItem.innerHTML = `
+            <img src="${item.image}" alt="${item.title}" class="cart-item-img me-3">
+            <div class="flex-grow-1">
+              <h6 class="mb-1" style="font-size: 0.9rem;">${item.title}</h6>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted" style="font-size: 0.8rem;">${item.quantity} x ${item.price}</span>
+              </div>
+            </div>
+          `;
+          orderItemsContainer.appendChild(orderItem);
+        });
+
+        // Update all prices based on current currency
+        const savedCurrency = localStorage.getItem('currency') || 'Rs';
+        updateAllPrices(savedCurrency);
+      };
+
+      // Initial render
+      renderOrderItems();
+
+      // Listen for currency changes (from popup.js)
+      window.addEventListener('currencyChange', () => {
+        const savedCurrency = localStorage.getItem('currency') || 'Rs';
+        updateAllPrices(savedCurrency);
+      });
+
+      // Payment method selection
+      window.selectPaymentMethod = function(element, method) {
+        // Remove active class from all payment methods
+        document.querySelectorAll('.payment-method').forEach(el => {
+          el.classList.remove('active');
+        });
+        
+        // Add active class to selected method
+        element.classList.add('active');
+        
+        // Update radio button
+        document.getElementById(method === 'card' ? 'creditCard' : 
+                              method === 'paypal' ? 'paypal' : 'bankTransfer').checked = true;
+      };
+    });
+
+    // Process payment function
+    function processPayment() {
+      // Show the payment modal
+      const paymentModal = document.getElementById('paymentModal');
+      paymentModal.classList.add('active');
+      
+      // Get payment details
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').nextElementSibling.textContent.trim();
+      const totalAmount = document.getElementById('total-price').textContent;
+      
+      // Set payment details in modal
+      document.getElementById('paymentMethod').textContent = paymentMethod;
+      document.getElementById('paymentAmount').textContent = totalAmount;
+      
+      // Generate a random transaction ID
+      const transactionId = 'TXN-' + Math.floor(Math.random() * 1000000000);
+      document.getElementById('transactionId').textContent = transactionId;
+      
+      // Get current date and time
+      const now = new Date();
+      const paymentDate = now.toLocaleString();
+      document.getElementById('paymentDate').textContent = paymentDate;
+      
+      // Simulate payment processing (3 seconds)
+      setTimeout(() => {
+        // Hide processing animation
+        document.getElementById('paymentProcessing').style.display = 'none';
+        
+        // Show success message
+        document.getElementById('paymentSuccess').style.display = 'block';
+        document.getElementById('continueBtn').style.display = 'block';
+      }, 3000);
+    }
+    
+    // Redirect to confirmation page
+    function redirectToConfirmation() {
+      window.location.href = "confirmation.html";
+    }
+
+    // Hide the loader and show the main content after 2 seconds
+    setTimeout(() => {
+      const loader = document.getElementById('loader');
+      const mainContent = document.getElementById('main-content');
+  
+      if (loader && mainContent) {
+        loader.style.display = 'none';
+        mainContent.style.display = 'block';
+      }
+    }, 2000);
+
+
+     // Enhanced selectPaymentMethod function
+     window.selectPaymentMethod = function(element, method) {
+      // Remove active class from all payment methods
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Add active class to selected method
+      element.classList.add('active');
+      
+      // Update radio button
+      document.getElementById(method === 'card' ? 'creditCard' : 
+                            method === 'paypal' ? 'paypal' : 'bankTransfer').checked = true;
+    };
+
+    // File upload handling
+    document.getElementById('bankSlip').addEventListener('change', function(e) {
+      const fileName = e.target.files[0] ? e.target.files[0].name : 'No file chosen';
+      document.getElementById('bankSlipName').textContent = fileName;
+    });
+
+    // Enhanced processPayment function
+    function processPayment() {
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').id;
+      
+      // Validate based on payment method
+      if (paymentMethod === 'paypal') {
+        const paypalEmail = document.getElementById('paypalEmail').value;
+        if (!paypalEmail || !/^\S+@\S+\.\S+$/.test(paypalEmail)) {
+          alert('Please enter a valid PayPal email address');
+          return;
+        }
+      } 
+      else if (paymentMethod === 'bankTransfer') {
+        const bankSlip = document.getElementById('bankSlip').files[0];
+        if (!bankSlip) {
+          alert('Please upload your payment slip');
+          return;
+        }
+      }
+      else { // Credit card
+        const cardNumber = document.getElementById('cardNumber').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+        const cardName = document.getElementById('cardName').value;
+        
+        if (!cardNumber || !expiryDate || !cvv || !cardName) {
+          alert('Please fill in all credit card details');
+          return;
+        }
+      }
+
+      // Show the payment modal
+      const paymentModal = document.getElementById('paymentModal');
+      paymentModal.classList.add('active');
+      
+      // Get payment details
+      const paymentMethodText = document.querySelector('input[name="paymentMethod"]:checked').nextElementSibling.textContent.trim();
+      const totalAmount = document.getElementById('total-price').textContent;
+      
+      // Set payment details in modal
+      document.getElementById('paymentMethod').textContent = paymentMethodText;
+      document.getElementById('paymentAmount').textContent = totalAmount;
+      
+      // Generate a random transaction ID
+      const transactionId = 'TXN-' + Math.floor(Math.random() * 1000000000);
+      document.getElementById('transactionId').textContent = transactionId;
+      
+      // Get current date and time
+      const now = new Date();
+      const paymentDate = now.toLocaleString();
+      document.getElementById('paymentDate').textContent = paymentDate;
+      
+      // Simulate payment processing (3 seconds)
+      setTimeout(() => {
+        // Hide processing animation
+        document.getElementById('paymentProcessing').style.display = 'none';
+        
+        // Show success message
+        document.getElementById('paymentSuccess').style.display = 'block';
+        document.getElementById('continueBtn').style.display = 'block';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

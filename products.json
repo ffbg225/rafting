@@ -1,0 +1,4 @@
+[
+    { "id": 1, "name": "Product 1", "weight": "500g", "price": 200, "image": "images/b1.png" },
+    { "id": 2, "name": "Product 2", "weight": "1kg", "price": 350, "image": "img2.jpg" }
+]
